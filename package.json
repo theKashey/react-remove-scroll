@@ -1,7 +1,7 @@
 {
   "name": "react-remove-scroll-bar",
   "version": "1.1.0",
-  "description": "",
+  "description": "Disables scroll outside of `children` node.",
   "main": "dist/es5/index.js",
   "scripts": {
     "test": "ts-react-toolbox test",
@@ -16,9 +16,9 @@
     "format": "ts-react-toolbox format",
     "analyze": "ts-react-toolbox analyze"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["scroll"],
+  "author": "Anton Korzunov <thekashey@gmail.com>",
+  "license": "MIT",
   "devDependencies": {
     "size-limit": "^0.21.1",
     "ts-react-toolbox": "^0.2.2"

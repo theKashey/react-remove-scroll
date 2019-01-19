@@ -2,6 +2,7 @@ export const handleScroll = (endTarget: HTMLElement, event: any, sourceDelta: nu
   const delta = sourceDelta;
   // find scrollable target
   let target: HTMLElement = event.target as any;
+  const targetInLock = endTarget.contains(target);
 
   let shouldCancelScroll = false;
   const isDeltaPositive = delta > 0;
@@ -16,7 +17,12 @@ export const handleScroll = (endTarget: HTMLElement, event: any, sourceDelta: nu
     availableScrollTop += scrollTop;
 
     target = target.parentNode as any;
-  } while (target !== document.body || endTarget.contains(target));
+  } while (
+    // portaled content
+    (!targetInLock && target !== document.body) ||
+    // self content
+    (targetInLock && (endTarget.contains(target) || endTarget===target))
+  );
 
   if (isDeltaPositive && delta > availableScroll) {
     shouldCancelScroll = true;

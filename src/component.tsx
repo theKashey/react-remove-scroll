@@ -7,10 +7,12 @@ export const getTouchY = (event: TouchEvent) => event.changedTouches ? event.cha
 
 export interface RemoveScrollProps {
   noIsolation?: boolean;
+  forwardProps?: boolean;
+  className?: string
 }
 
 export class RemoveScroll extends React.Component<RemoveScrollProps> {
-  private shouldPreventQueue: Array<{ name: string, delta: number, target: any }> = [];
+  private shouldPreventQueue: Array<{ name: string, delta: number, target: any, should: boolean }> = [];
   private touchStart = 0;
   private ref = React.createRef<HTMLDivElement>();
 
@@ -30,22 +32,20 @@ export class RemoveScroll extends React.Component<RemoveScrollProps> {
 
   shouldPrevent = (event: any) => {
     const delta = event.deltaY || getTouchY(event);
-    const sourceEvent = this.shouldPreventQueue.find(
+    const sourceEvent = this.shouldPreventQueue.filter(
       (e: any) => e.name === event.type && e.delta === delta && e.target === event.target
-    );
-    if (!sourceEvent) {
+    )[0];
+    if ((!sourceEvent && !this.props.noIsolation) || (sourceEvent && sourceEvent.should)) {
       event.preventDefault();
     }
   };
 
   shouldCancel = (name: string, delta: number, target: any, should: boolean) => {
-    if (!should) {
-      const event = {name, delta, target};
-      this.shouldPreventQueue.push(event);
-      setTimeout(() => {
-        this.shouldPreventQueue = this.shouldPreventQueue.filter(e => e !== event);
-      }, 1);
-    }
+    const event = {name, delta, target, should};
+    this.shouldPreventQueue.push(event);
+    setTimeout(() => {
+      this.shouldPreventQueue = this.shouldPreventQueue.filter(e => e !== event);
+    }, 1);
   };
 
   scrollTouchStart = (event: TouchEvent<HTMLDivElement>) => {
@@ -61,18 +61,22 @@ export class RemoveScroll extends React.Component<RemoveScrollProps> {
   };
 
   render() {
+    const {forwardProps, children, className} = this.props;
+
+    const props = {
+      ref: this.ref,
+      onScrollCapture: this.scrollWheel,
+      onWheelCapture: this.scrollWheel,
+      onTouchStartCapture: this.scrollTouchStart,
+      onTouchMoveCapture: this.scrollTouchMove,
+    };
     return (
       <React.Fragment>
         <RemoveScrollBar/>
-        <div
-          ref={this.ref}
-          onScrollCapture={this.scrollWheel}
-          onWheelCapture={this.scrollWheel}
-          onTouchStartCapture={this.scrollTouchStart}
-          onTouchMoveCapture={this.scrollTouchMove}
-        >
-          {this.props.children}
-        </div>
+        {forwardProps
+          ? React.cloneElement(React.Children.only(children), props)
+          : <div {...props} className={className}>{children}</div>
+        }
       </React.Fragment>
     )
   }

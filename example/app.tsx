@@ -27,7 +27,7 @@ const PDiv = () => (
       //width: '100%',
       height: '50px',
       backgroundColor: 'rgba(0,100,100,0.5)',
-      zIndex:10
+      zIndex: 10
     }}
     // className={zeroRightClassName}
   >
@@ -49,7 +49,7 @@ export default class App extends Component <{}, AppState> {
 
   componentDidMount() {
     setInterval(() => {
-      //this.setState({counter: this.state.counter ? 0 : 1})
+      this.setState({counter: this.state.counter ? 0 : 1})
     }, 1000);
 
     setTimeout(() => {
@@ -70,27 +70,43 @@ export default class App extends Component <{}, AppState> {
         }}>floating
         </div>
 
-        <RemoveScroll>
-          <div
-            style={{
-              position: 'absolute',
-              overflow: 'scroll',
-              left: 0,
-              right: 0,
-              top: '50px',
-              //width: '100%',
-              height: '50px',
-              backgroundColor: 'rgba(100,0,0,0.5)'
-            }}
-            // className={zeroRightClassName}
-          >
-            XXX
-            XXX
-            XXX
-            {fill(20, 1).map(x => <p>{x}****</p>)}
-            <Portal/>
-          </div>
-        </RemoveScroll>
+        <div
+          style={{
+            position: 'absolute',
+            overflow: 'scroll',
+            left: 0,
+            right: 0,
+            top: '50px',
+            //width: '100%',
+            height: '80px',
+            backgroundColor: 'rgba(100,0,0,0.5)'
+          }}
+          // className={zeroRightClassName}
+        >
+          XXX
+          {(<RemoveScroll>
+            <div
+              style={{
+                position: 'absolute',
+                overflow: 'scroll',
+                left: 0,
+                right: 0,
+                top: '20px',
+                //width: '100%',
+                height: '100px',
+                backgroundColor: 'rgba(100,0,0,0.5)'
+              }}
+              // className={zeroRightClassName}
+            >
+              XXX
+              XXX
+              XXX
+              {fill(20, 1).map(x => <p>{x}****</p>)}
+              <Portal/>
+            </div>
+          </RemoveScroll>
+          )}
+        </div>
 
         <div
           style={{

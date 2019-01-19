@@ -1,6 +1,6 @@
 {
-  "name": "react-remove-scroll-bar",
-  "version": "1.1.0",
+  "name": "react-remove-scroll",
+  "version": "1.0.0",
   "description": "Disables scroll outside of `children` node.",
   "main": "dist/es5/index.js",
   "scripts": {
@@ -35,7 +35,7 @@
   "files": [
     "dist"
   ],
-  "repository": "https://github.com/theKashey/react-remove-scroll-bar",
+  "repository": "https://github.com/theKashey/react-remove-scroll",
   "dependencies": {
     "react-remove-scroll-bar": "^1.1.1"
   }

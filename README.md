@@ -3,9 +3,9 @@ react-remove-scroll
 Disables scroll outside of `children` node.
 
 - 🖱 mouse and touch devices friendly
-- 📜 removes document scroll bar maintaining the gap
+- 📜 removes document scroll bar maintaining it space
 - ✅ support nested scrollable elements
-- 🕳 supports react-portals
+- 🕳 supports react-portals (uses React Event system)
 
 # Usage
 Just wrap content, which should be scrollable, and everything else would not. 

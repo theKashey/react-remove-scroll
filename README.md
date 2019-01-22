@@ -1,5 +1,7 @@
 react-remove-scroll
 ====
+[![NPM version](https://img.shields.io/npm/v/react-remove-scroll.svg)](https://www.npmjs.com/package/react-remove-scroll)
+
 Disables scroll outside of `children` node.
 
 - 🖱 mouse and touch devices friendly
@@ -10,7 +12,7 @@ Disables scroll outside of `children` node.
 # Usage
 Just wrap content, which should be scrollable, and everything else would not. 
 ```js
-import {RemoveScroll} from 'react-remove-scroll-bar';
+import {RemoveScroll} from 'react-remove-scroll';
 
 <RemoveScroll>
   Only this content would be scrollable

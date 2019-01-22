@@ -1,32 +1,65 @@
 import * as React from 'react';
 import {TouchEvent} from "react";
-import {RemoveScrollBar} from 'react-remove-scroll-bar';
+import {RemoveScrollBar, fullWidthClassName, zeroRightClassName} from 'react-remove-scroll-bar';
 import {handleScroll} from "./handleScroll";
+import {aggressive} from './aggresiveCapture';
 
 export const getTouchY = (event: TouchEvent) => event.changedTouches ? event.changedTouches[0].clientY : 0;
 
 export interface RemoveScrollProps {
   noIsolation?: boolean;
   forwardProps?: boolean;
-  className?: string
+  enabled?: boolean;
+  className?: string;
+  removeScrollBar?: boolean;
 }
+
+const classNames = {
+  fullWidth: fullWidthClassName,
+  zeroRight: zeroRightClassName,
+};
 
 export class RemoveScroll extends React.Component<RemoveScrollProps> {
   private shouldPreventQueue: Array<{ name: string, delta: number, target: any, should: boolean }> = [];
   private touchStart = 0;
   private ref = React.createRef<HTMLDivElement>();
 
+  public static classNames = classNames;
+
+  static defaultProps = {
+    enabled: true,
+    removeScrollBar: true,
+  };
+
   componentDidMount() {
-    if (typeof document !== 'undefined') {
-      document.addEventListener('wheel', this.shouldPrevent, {passive: false});
-      document.addEventListener('touchmove', this.shouldPrevent, {passive: false});
-    }
+    this.componentDidUpdate({enabled: false})
   }
 
   componentWillUnmount() {
+    this.disable()
+  }
+
+  componentDidUpdate(oldProps: RemoveScrollProps) {
+    if (oldProps.enabled !== this.props.enabled) {
+      if (this.props.enabled) {
+        this.enable();
+      } else {
+        this.disable();
+      }
+    }
+  }
+
+  enable() {
+    if (typeof document !== 'undefined') {
+      document.addEventListener('wheel', this.shouldPrevent, aggressive);
+      document.addEventListener('touchmove', this.shouldPrevent, aggressive);
+    }
+  }
+
+  disable() {
     if (typeof window !== 'undefined') {
-      document.removeEventListener('wheel', this.shouldPrevent, {passive: false} as any);
-      document.removeEventListener('touchmove', this.shouldPrevent, {passive: false} as any);
+      document.removeEventListener('wheel', this.shouldPrevent, aggressive as any);
+      document.removeEventListener('touchmove', this.shouldPrevent, aggressive as any);
     }
   }
 
@@ -61,7 +94,7 @@ export class RemoveScroll extends React.Component<RemoveScrollProps> {
   };
 
   render() {
-    const {forwardProps, children, className} = this.props;
+    const {forwardProps, children, className, removeScrollBar, enabled} = this.props;
 
     const props = {
       ref: this.ref,
@@ -72,7 +105,7 @@ export class RemoveScroll extends React.Component<RemoveScrollProps> {
     };
     return (
       <React.Fragment>
-        <RemoveScrollBar/>
+        {removeScrollBar && enabled && <RemoveScrollBar gapMode="margin"/>}
         {forwardProps
           ? React.cloneElement(React.Children.only(children), props)
           : <div {...props} className={className}>{children}</div>

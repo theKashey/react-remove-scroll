@@ -49,7 +49,7 @@ export default class App extends Component <{}, AppState> {
 
   componentDidMount() {
     setInterval(() => {
-      this.setState({counter: this.state.counter ? 0 : 1})
+       this.setState({counter: this.state.counter ? 0 : 1})
     }, 1000);
 
     setTimeout(() => {
@@ -84,7 +84,7 @@ export default class App extends Component <{}, AppState> {
           // className={zeroRightClassName}
         >
           XXX
-          {(<RemoveScroll>
+          {(<RemoveScroll enabled={!!(this.state.counter % 2)}>
             <div
               style={{
                 position: 'absolute',
@@ -138,7 +138,7 @@ export default class App extends Component <{}, AppState> {
             height: '50px',
             backgroundColor: 'rgba(0,0,0,0.5)'
           }}
-          // className={fullWidthClassName}
+          className={RemoveScroll.classNames.fullWidth}
         >
           XXX
           XXX

@@ -19,9 +19,11 @@ import {RemoveScroll} from 'react-remove-scroll-bar';
 
 `RemoveScroll` accept following props
 - `children`
+- `[enabled]` - activate or deactivate component behaviour without removing it.
 - `[noIsolation]` - disables outer event capturing
 - `[forwardProps]` - will forward all props to the `children`
 - `[className]` - className for an internal div
+- `[removeScrollBar]` - to control scroll bar removal. Set to false, if you prefer to keep it (wheel and touch scroll still disabled).
 
 ## Internal div
 But default RemoveScroll will create a div to handle and capture events.
@@ -43,6 +45,19 @@ The following code samples will produce the same output
 ```
 Pick the first one if you don't need a second.
 
+## Position:fixed elements
+To properly size these elements please add a special className to them.
+```jsx
+import {RemoveScroll} from 'react-remove-scroll';
+
+// to make "width: 100%"
+<div className={cx(classWithPositionFixed, RemoveScroll.classNames.fullWidth)} />
+
+// to make "right:0"
+<div className={cx(classWithPositionFixed, RemoveScroll.classNames.zeroRight)} />
+```
+See [react-remove-scroll-bar](https://github.com/theKashey/react-remove-scroll-bar) documentation for details.
+
 ## More than one lock
 This library will silence any scroll(wheel, touch) event outside of whitelisted node. To be able to use more than one lock:
 - disable isolation mode `<RemoveScroll noIsolation />`. Then remove scroll would handle only events, happened inside it.
@@ -60,7 +75,10 @@ to make package smaller and more react-portals friendly.
  - [react-focus-on](https://github.com/theKashey/react-focus-on) - Finite Modal creator (uses Scroll-Locky) underneath.
  - [react-locky](https://github.com/theKashey/react-locky) - React event canceler
  - [react-scrolllock](https://github.com/jossmac/react-scrolllock) - React scroll lock
- - [scroll-lock](https://github.com/FL3NKEY/scroll-lock) - DOM scroll lock  
+ - [scroll-lock](https://github.com/FL3NKEY/scroll-lock) - DOM scroll lock
+ - [body-scroll-lock](https://github.com/willmcpo/body-scroll-lock) - DOM scroll lock
+ 
+ > This package is relative smaller(1), more react friendly(2), works with non zero body margins(3), and has a better "overscroll" management. 
 
 # License
 MIT

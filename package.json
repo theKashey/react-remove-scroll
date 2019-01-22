@@ -16,7 +16,9 @@
     "format": "ts-react-toolbox format",
     "analyze": "ts-react-toolbox analyze"
   },
-  "keywords": ["scroll"],
+  "keywords": [
+    "scroll"
+  ],
   "author": "Anton Korzunov <thekashey@gmail.com>",
   "license": "MIT",
   "devDependencies": {
@@ -37,6 +39,6 @@
   ],
   "repository": "https://github.com/theKashey/react-remove-scroll",
   "dependencies": {
-    "react-remove-scroll-bar": "^1.1.1"
+    "react-remove-scroll-bar": "^1.1.3"
   }
 }

@@ -59,10 +59,15 @@ import {RemoveScroll} from 'react-remove-scroll';
 See [react-remove-scroll-bar](https://github.com/theKashey/react-remove-scroll-bar) documentation for details.
 
 ## More than one lock
-This library will silence any scroll(wheel, touch) event outside of whitelisted node. To be able to use more than one lock:
-- disable isolation mode `<RemoveScroll noIsolation />`. Then remove scroll would handle only events, happened inside it.
-To use this mode you have to _cast_ some _shadow_ behind a modal, to redirect all events to your element
-- use [react-scroll-locky](https://github.com/theKashey/react-scroll-locky), or [react-focus-on](https://github.com/theKashey/react-focus-on), but they are lager. 
+When stacked more is active (default) only one (last) component would be active.
+
+# Performance
+To do the job this library setup _non_ passive event listener. Chrome dev tools would complain about it, as a 
+performance no-op.
+
+We have to use synchronous scroll/touch handler, and it may affect scrolling performance.
+
+Consider using `noIsolation` mode, if you have large scrollable areas.
 
 # Size
 1.5kb after compression (excluding tslib).

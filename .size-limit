@@ -2,6 +2,6 @@
   {
     path: "dist/es2015/index.js",
     ignore: ["react-dom", "tslib"],
-    limit: "1.5 KB"
+    limit: "1.9 KB"
   }
 ]

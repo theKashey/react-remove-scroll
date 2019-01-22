@@ -84,7 +84,7 @@ export default class App extends Component <{}, AppState> {
           // className={zeroRightClassName}
         >
           XXX
-          {(<RemoveScroll enabled={!!(this.state.counter % 2)}>
+          {(<RemoveScroll enabled={1}>
             <div
               style={{
                 position: 'absolute',
@@ -108,6 +108,7 @@ export default class App extends Component <{}, AppState> {
           )}
         </div>
 
+        <RemoveScroll enabled={!!(this.state.counter % 2)}>
         <div
           style={{
             position: 'absolute',
@@ -116,8 +117,8 @@ export default class App extends Component <{}, AppState> {
             right: 0,
             top: '100px',
             //width: '100%',
-            height: '50px',
-            backgroundColor: 'rgba(0,0,0,0.5)'
+            height: '150px',
+            backgroundColor: 'rgba(0,1,0,0.5)'
           }}
           // className={fullWidthClassName}
         >
@@ -126,6 +127,7 @@ export default class App extends Component <{}, AppState> {
           XXX
           {fill(20, 1).map(x => <p>{x}****</p>)}
         </div>
+        </RemoveScroll>
 
         <div
           style={{

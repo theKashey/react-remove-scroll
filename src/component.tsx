@@ -25,6 +25,7 @@ export class RemoveScroll extends React.Component<RemoveScrollProps> {
   private ref = React.createRef<HTMLDivElement>();
 
   public static classNames = classNames;
+  public static stack: Array<RemoveScroll> = [];
 
   static defaultProps = {
     enabled: true,
@@ -32,10 +33,12 @@ export class RemoveScroll extends React.Component<RemoveScrollProps> {
   };
 
   componentDidMount() {
+    RemoveScroll.stack.push(this);
     this.componentDidUpdate({enabled: false})
   }
 
   componentWillUnmount() {
+    RemoveScroll.stack = RemoveScroll.stack.filter(inst => inst !== this);
     this.disable()
   }
 
@@ -64,6 +67,10 @@ export class RemoveScroll extends React.Component<RemoveScrollProps> {
   }
 
   shouldPrevent = (event: any) => {
+    if (RemoveScroll.stack[RemoveScroll.stack.length - 1] !== this) {
+      // not current active
+      return;
+    }
     const delta = event.deltaY || getTouchY(event);
     const sourceEvent = this.shouldPreventQueue.filter(
       (e: any) => e.name === event.type && e.delta === delta && e.target === event.target

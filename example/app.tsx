@@ -44,12 +44,12 @@ const Portal = () => (
 
 export default class App extends Component <{}, AppState> {
   state: AppState = {
-    counter: 1
+    counter: 0
   };
 
   componentDidMount() {
     setInterval(() => {
-       this.setState({counter: this.state.counter ? 0 : 1})
+       //this.setState({counter: this.state.counter ? 0 : 1})
     }, 1000);
 
     setTimeout(() => {
@@ -79,7 +79,7 @@ export default class App extends Component <{}, AppState> {
             top: '50px',
             //width: '100%',
             height: '80px',
-            backgroundColor: 'rgba(100,0,0,0.5)'
+            backgroundColor: 'rgba(200,0,0,0.5)'
           }}
           // className={zeroRightClassName}
         >
@@ -98,10 +98,10 @@ export default class App extends Component <{}, AppState> {
               }}
               // className={zeroRightClassName}
             >
-              XXX
-              XXX
-              XXX
-              {fill(20, 1).map(x => <p>{x}****</p>)}
+              YY
+              ZZZ
+              AAAA
+              {fill(20, 1).map(x => <p>{x} --****--</p>)}
               <Portal/>
             </div>
           </RemoveScroll>

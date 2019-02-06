@@ -67,7 +67,8 @@ export class RemoveScroll extends React.Component<RemoveScrollProps> {
   }
 
   shouldPrevent = (event: any) => {
-    if (RemoveScroll.stack[RemoveScroll.stack.length - 1] !== this) {
+    const stack = RemoveScroll.stack.filter(el => el.props.enabled);
+    if (!stack.length || stack[stack.length - 1] !== this) {
       // not current active
       return;
     }

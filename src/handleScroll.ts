@@ -1,3 +1,7 @@
+const elementCouldBeScrolled = (node: HTMLElement): boolean => (
+  window.getComputedStyle(node).overflowX !== 'hidden'
+);
+
 export const handleScroll = (endTarget: HTMLElement, event: any, sourceDelta: number) => {
   const delta = sourceDelta;
   // find scrollable target
@@ -13,16 +17,21 @@ export const handleScroll = (endTarget: HTMLElement, event: any, sourceDelta: nu
   do {
     const {scrollTop, scrollHeight, clientHeight} = target;
 
-    availableScroll += scrollHeight - clientHeight - scrollTop;
-    availableScrollTop += scrollTop;
+    const elementScroll = scrollHeight - clientHeight - scrollTop;
+    if (scrollTop || elementScroll) {
+      if (elementCouldBeScrolled(target)) {
+        availableScroll += elementScroll;
+        availableScrollTop += scrollTop;
+      }
+    }
 
     target = target.parentNode as any;
   } while (
     // portaled content
-    (!targetInLock && target !== document.body) ||
-    // self content
-    (targetInLock && (endTarget.contains(target) || endTarget===target))
-  );
+  (!targetInLock && target !== document.body) ||
+  // self content
+  (targetInLock && (endTarget.contains(target) || endTarget === target))
+    );
 
   if (isDeltaPositive && delta > availableScroll) {
     shouldCancelScroll = true;

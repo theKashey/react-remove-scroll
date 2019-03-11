@@ -13,13 +13,17 @@ export interface IRemoveScrollProps {
   className?: string;
   removeScrollBar?: boolean;
 
-  shards?: Array<React.RefObject<any>>;
+  shards?: Array<React.RefObject<any> | HTMLElement>;
 }
 
 const classNames = {
   fullWidth: fullWidthClassName,
   zeroRight: zeroRightClassName,
 };
+
+const extractRef = (ref: React.RefObject<any> | HTMLElement): HTMLElement => (
+  (ref && 'current' in ref) ? ref.current : ref
+);
 
 export class RemoveScroll extends React.Component<IRemoveScrollProps> {
   public static classNames = classNames;
@@ -45,7 +49,7 @@ export class RemoveScroll extends React.Component<IRemoveScrollProps> {
     this.disable()
   }
 
-  componentDidUpdate(oldProps: RemoveScrollProps) {
+  componentDidUpdate(oldProps: IRemoveScrollProps) {
     if (oldProps.enabled !== this.props.enabled) {
       if (this.props.enabled) {
         this.enable();
@@ -100,7 +104,7 @@ export class RemoveScroll extends React.Component<IRemoveScrollProps> {
     // outside or shard event
     if (!sourceEvent) {
       const shardNodes = (this.props.shards || [])
-        .map(({current}) => current)
+        .map(extractRef)
         .filter(Boolean)
         .filter(node => node.contains(event.target));
 

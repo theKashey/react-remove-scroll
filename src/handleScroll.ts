@@ -1,5 +1,5 @@
 const elementCouldBeScrolled = (node: HTMLElement): boolean => (
-  window.getComputedStyle(node).overflowX !== 'hidden'
+  window.getComputedStyle(node).overflowY !== 'hidden'
 );
 
 export const handleScroll = (endTarget: HTMLElement, event: any, sourceDelta: number) => {

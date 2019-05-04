@@ -31,9 +31,7 @@ const PDiv = () => (
     }}
     // className={zeroRightClassName}
   >
-    XXX
-    XXX
-    XXX
+    PORTALED SCROLLABLE
     {fill(20, 1).map(x => <p>{x}****</p>)}
   </div>
 );
@@ -83,7 +81,7 @@ export default class App extends Component <{}, AppState> {
           }}
           // className={zeroRightClassName}
         >
-          SCROLL!!!
+          SCROLL (end of content would be hidden under "parent" scroll).
           {(<RemoveScroll enabled={true}>
               <div
                 style={{
@@ -99,6 +97,7 @@ export default class App extends Component <{}, AppState> {
                 }}
                 // className={zeroRightClassName}
               >
+                PRIMARY SCROLLABLE
                 YY
                 ZZZ
                 AAAA
@@ -191,7 +190,7 @@ export default class App extends Component <{}, AppState> {
           </>
         )}
 
-        <p>FILL</p>
+        <p>FILLER (not scrollable)</p>
         {fill(100, 1).map((x, index) => <p>{index}**** </p>)}
         <p>END</p>
       </AppWrapper>

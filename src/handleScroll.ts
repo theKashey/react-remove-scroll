@@ -1,6 +1,10 @@
-const elementCouldBeScrolled = (node: HTMLElement): boolean => (
-  window.getComputedStyle(node).overflowY !== 'hidden'
-);
+  const elementCouldBeScrolled = (node: HTMLElement): boolean => {
+  const styles = window.getComputedStyle(node);
+  return (
+    styles.overflowY !== 'hidden' && // not-not-scrollable
+    !(styles.overflowY === styles.overflowX && styles.overflowY === 'visible') // scrollable
+  );
+};
 
 export const handleScroll = (endTarget: HTMLElement, event: any, sourceDelta: number) => {
   const delta = sourceDelta;

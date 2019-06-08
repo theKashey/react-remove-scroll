@@ -27,6 +27,23 @@ import {RemoveScroll} from 'react-remove-scroll';
 - `[className]` - className for an internal div
 - `[removeScrollBar]` - to control scroll bar removal. Set to false, if you prefer to keep it (wheel and touch scroll still disabled).
 
+# Size
+- (🧩 full) 1.5kb after compression (excluding tslib).
+---
+- (👁 UI) __400b__, visual elements only
+- (🚗 sidecar) 1kb, side effects
+```js
+import {sidecar} from "use-sidecar";
+import {RemoveScroll} from 'react-remove-scroll/UI';
+
+const sidecar = sidecar(() => import('react-remove-scroll/sidecar'));
+
+<RemoveScroll sideCar={sidecar}>
+  Will load logic from a sidecar when needed
+</RemoveScroll>  
+```
+
+
 ## Internal div
 But default RemoveScroll will create a div to handle and capture events.
 You may specify `className` for it, if you need, or __remove it__.
@@ -70,9 +87,6 @@ performance no-op.
 We have to use synchronous scroll/touch handler, and it may affect scrolling performance.
 
 Consider using `noIsolation` mode, if you have large scrollable areas.
-
-# Size
-1.5kb after compression (excluding tslib).
 
 # Scroll-Locky
 This is a refactoring of another library - [react-scroll-locky](https://github.com/theKashey/react-scroll-locky) -

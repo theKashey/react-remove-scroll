@@ -1,62 +1,34 @@
 import * as React from 'react';
 import {TouchEvent} from "react";
-import {RemoveScrollBar, fullWidthClassName, zeroRightClassName} from 'react-remove-scroll-bar';
+import {RemoveScrollBar} from 'react-remove-scroll-bar';
 import {handleScroll} from "./handleScroll";
 import {aggressive} from './aggresiveCapture';
+import {IRemoveScrollEffectProps} from "./types";
 
 export const getTouchY = (event: TouchEvent) => event.changedTouches ? event.changedTouches[0].clientY : 0;
-
-export interface IRemoveScrollProps {
-  noIsolation?: boolean;
-  forwardProps?: boolean;
-  enabled?: boolean;
-  className?: string;
-  removeScrollBar?: boolean;
-
-  shards?: Array<React.RefObject<any> | HTMLElement>;
-}
-
-const classNames = {
-  fullWidth: fullWidthClassName,
-  zeroRight: zeroRightClassName,
-};
 
 const extractRef = (ref: React.RefObject<any> | HTMLElement): HTMLElement => (
   (ref && 'current' in ref) ? ref.current : ref
 );
 
-export class RemoveScroll extends React.Component<IRemoveScrollProps> {
-  public static classNames = classNames;
-
-  public static defaultProps = {
-    enabled: true,
-    removeScrollBar: true,
-  };
-
-  private static stack: RemoveScroll[] = [];
+export class RemoveScrollSideCar extends React.Component<IRemoveScrollEffectProps> {
+  private static stack: RemoveScrollSideCar[] = [];
 
   private shouldPreventQueue: Array<{ name: string, delta: number, target: any, should: boolean }> = [];
   private touchStart = 0;
-  private ref = React.createRef<HTMLDivElement>();
 
   componentDidMount() {
-    RemoveScroll.stack.push(this);
-    this.componentDidUpdate({enabled: false})
+    RemoveScrollSideCar.stack.push(this);
+    this.props.setCallbacks({
+      onScrollCapture: this.scrollWheel,
+      onWheelCapture: this.scrollWheel,
+      onTouchMoveCapture: this.scrollTouchMove,
+    });
   }
 
   componentWillUnmount() {
-    RemoveScroll.stack = RemoveScroll.stack.filter(inst => inst !== this);
-    this.disable()
-  }
-
-  componentDidUpdate(oldProps: IRemoveScrollProps) {
-    if (oldProps.enabled !== this.props.enabled) {
-      if (this.props.enabled) {
-        this.enable();
-      } else {
-        this.disable();
-      }
-    }
+    RemoveScrollSideCar.stack = RemoveScrollSideCar.stack.filter(inst => inst !== this);
+    this.disable();
   }
 
   enable() {
@@ -79,7 +51,7 @@ export class RemoveScroll extends React.Component<IRemoveScrollProps> {
     switch (event.type) {
       case 'wheel':
       case 'scroll':
-        return handleScroll(parent, event, event.deltaY)
+        return handleScroll(parent, event, event.deltaY);
       case 'touchmove':
         return handleScroll(parent, event, this.touchStart - getTouchY(event));
     }
@@ -87,9 +59,9 @@ export class RemoveScroll extends React.Component<IRemoveScrollProps> {
   };
 
   shouldPrevent = (event: any) => {
-    const stack = RemoveScroll.stack.filter(el => el.props.enabled);
+    const stack = RemoveScrollSideCar.stack;
     if (!stack.length || stack[stack.length - 1] !== this) {
-      // not current active
+      // not the last active
       return;
     }
     const delta = event.deltaY || getTouchY(event);
@@ -110,7 +82,7 @@ export class RemoveScroll extends React.Component<IRemoveScrollProps> {
 
       const shouldStop = shardNodes.length > 0
         ? this.shouldCancelEvent(event, shardNodes[0])
-        : !this.props.noIsolation
+        : !this.props.noIsolation;
 
       if (shouldStop) {
         event.preventDefault();
@@ -131,30 +103,20 @@ export class RemoveScroll extends React.Component<IRemoveScrollProps> {
   };
 
   scrollWheel = (event: any) => {
-    this.shouldCancel(event.type, event.deltaY, event.target, this.shouldCancelEvent(event, this.ref.current as any));
+    this.shouldCancel(event.type, event.deltaY, event.target, this.shouldCancelEvent(event, this.props.lockRef.current as any));
   };
 
   scrollTouchMove = (event: TouchEvent<HTMLDivElement>) => {
-    this.shouldCancel(event.type, getTouchY(event), event.target, this.shouldCancelEvent(event, this.ref.current as any));
+    this.shouldCancel(event.type, getTouchY(event), event.target, this.shouldCancelEvent(event, this.props.lockRef.current as any));
   };
 
   render() {
-    const {forwardProps, children, className, removeScrollBar, enabled} = this.props;
+    const {removeScrollBar} = this.props;
 
-    const props = {
-      ref: this.ref,
-      onScrollCapture: this.scrollWheel,
-      onWheelCapture: this.scrollWheel,
-      onTouchMoveCapture: this.scrollTouchMove,
-    };
     return (
-      <React.Fragment>
-        {removeScrollBar && enabled && <RemoveScrollBar gapMode="margin"/>}
-        {forwardProps
-          ? React.cloneElement(React.Children.only(children), props)
-          : <div {...props} className={className}>{children}</div>
-        }
-      </React.Fragment>
+      removeScrollBar
+        ? <RemoveScrollBar gapMode="margin"/>
+        : null
     )
   }
 }

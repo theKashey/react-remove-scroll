@@ -1,8 +1,10 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import {Component} from 'react';
-import {AppWrapper} from './styled';
-import {RemoveScroll} from "../src";
+import {RemoveScroll} from "../src/UI";
+import {sidecar} from "use-sidecar";
+
+const lockSideCar = sidecar(() => import ("../src/sidecar"));
 
 export interface AppState {
   counter: number;
@@ -37,7 +39,7 @@ const PDiv = () => (
 );
 
 const Portal = () => (
-  ReactDOM.createPortal(<PDiv/>, document.getElementById('portal'))
+  ReactDOM.createPortal(<PDiv/>, document.getElementById('portal')!)
 )
 
 export default class App extends Component <{}, AppState> {
@@ -47,7 +49,7 @@ export default class App extends Component <{}, AppState> {
 
   componentDidMount() {
     setInterval(() => {
-       //this.setState({counter: this.state.counter ? 0 : 1})
+      //this.setState({counter: this.state.counter ? 0 : 1})
     }, 1000);
 
     setTimeout(() => {
@@ -57,7 +59,7 @@ export default class App extends Component <{}, AppState> {
 
   render() {
     return (
-      <AppWrapper>
+      <div>
         <div style={{
           position: 'absolute',
           left: 0,
@@ -82,7 +84,10 @@ export default class App extends Component <{}, AppState> {
           // className={zeroRightClassName}
         >
           SCROLL (end of content would be hidden under "parent" scroll).
-          {(<RemoveScroll enabled={true}>
+          {(<RemoveScroll
+              enabled={true}
+              sideCar={lockSideCar}
+            >
               <div
                 style={{
                   //position: 'absolute',
@@ -95,7 +100,7 @@ export default class App extends Component <{}, AppState> {
                   color: '#FFF',
                   backgroundColor: 'rgba(0,0,0,0.5)'
                 }}
-                // className={zeroRightClassName}
+                 // className={RemoveScroll.classNames.zeroRight}
               >
                 PRIMARY SCROLLABLE
                 YY
@@ -114,86 +119,10 @@ export default class App extends Component <{}, AppState> {
           <p>SCROLL</p>
         </div>
 
-        {false && (
-          <RemoveScroll enabled={false && !!(this.state.counter % 2)}>
-            <div
-              style={{
-                position: 'absolute',
-                overflow: 'scroll',
-                left: 0,
-                right: 0,
-                top: '100px',
-                //width: '100%',
-                height: '150px',
-                backgroundColor: 'rgba(0,1,0,0.5)'
-              }}
-              // className={fullWidthClassName}
-            >
-              XXX
-              XXX
-              XXX
-              {fill(20, 1).map(x => <p>{x}****</p>)}
-            </div>
-          </RemoveScroll>
-        )}
-
-        {false && (
-          <>
-            <div
-              style={{
-                position: 'fixed',
-                overflow: 'scroll',
-                left: 0,
-                right: 0,
-                top: '150px',
-                //width: '100%',
-                height: '50px',
-                backgroundColor: 'rgba(0,0,0,0.5)'
-              }}
-              className={RemoveScroll.classNames.fullWidth}
-            >
-              XXX
-              XXX
-              XXX
-              {fill(20, 1).map(x => <p>{x}****</p>)}
-            </div>
-
-
-            <div style={{
-              position: 'absolute',
-              overflow: 'scroll',
-              left: 0,
-              right: 0,
-              top: 200,
-              //width: '100%',
-              height: 300,
-              backgroundColor: 'rgba(0,0,0,0.5)'
-            }}>
-              XXX
-              XXX
-              XXX
-
-              <div style={{
-                position: 'absolute',
-                overflow: 'scroll',
-                width: 200,
-                height: 200,
-                backgroundColor: 'rgba(0,0,0,0.5)'
-              }}>
-                ZZZ
-                ZZZ
-                {fill(20, 1).map(x => <p>{x}****</p>)}
-              </div>
-
-              {fill(20, 1).map(x => <p>{x}****</p>)}
-            </div>
-          </>
-        )}
-
         <p>FILLER (not scrollable)</p>
-        {fill(100, 1).map((x, index) => <p>{index}**** </p>)}
+        {fill(100, 1).map((_, index) => <p>{index}**** </p>)}
         <p>END</p>
-      </AppWrapper>
+      </div>
     )
   }
 }

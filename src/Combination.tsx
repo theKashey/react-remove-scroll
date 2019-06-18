@@ -1,13 +1,13 @@
 import * as React from 'react';
 import {RemoveScroll} from "./UI";
 import {IRemoveScrollProps} from './types';
-import {RemoveScrollSideCar} from './SideEffect';
+import SideCar from './sidecar';
 
 function ReactRemoveScroll(props: IRemoveScrollProps) {
   return (
     <RemoveScroll
       {...props}
-      sideCar={RemoveScrollSideCar}
+      sideCar={SideCar}
     />
   );
 }

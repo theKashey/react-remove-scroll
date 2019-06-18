@@ -1,6 +1,8 @@
 import * as React from "react";
 import {RefObject} from "react";
 
+export type Axis = 'v' | 'h';
+
 export interface RemoveScrollEffectCallbacks {
   onScrollCapture(event: any): void;
 
@@ -9,9 +11,19 @@ export interface RemoveScrollEffectCallbacks {
   onTouchMoveCapture(event: any): void;
 }
 
-export interface IRemoveScrollProps {
+export interface ChildrenNode {
+  forwardProps?:false;
+  children: React.ReactNode;
+}
+
+export interface ChildrenForward {
+  forwardProps: true;
+  children: React.ReactElement;
+}
+
+export interface IRemoveScrollSelfProps {
   noIsolation?: boolean;
-  forwardProps?: boolean;
+
   enabled?: boolean;
   className?: string;
   removeScrollBar?: boolean;
@@ -19,9 +31,10 @@ export interface IRemoveScrollProps {
   shards?: Array<React.RefObject<any> | HTMLElement>;
 }
 
-export interface IRemoveScrollUIProps extends IRemoveScrollProps{
-  sideCar: any;
-  children?: React.ReactNode;
+export type IRemoveScrollProps = IRemoveScrollSelfProps & (ChildrenForward | ChildrenNode);
+
+export type IRemoveScrollUIProps = IRemoveScrollProps & {
+  sideCar: React.FC<any>;
 }
 
 export interface IRemoveScrollEffectProps {

@@ -1,0 +1,39 @@
+.App {
+    font-family: sans-serif;
+    text-align: center;
+    width: 1024px;
+    height: 1024px;
+    overflow: scroll;
+}
+
+.Sub {
+    width: 300px;
+    height: 300px;
+    border: 1px solid #000;
+    overflow: auto;
+}
+
+.container {
+    background-color: #e8eaf6;
+    width: 600px;
+    height: 200px;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+.container .flex-container {
+    list-style: none;
+    padding: 0;
+    margin: 12px;
+    display: inline-flex;
+}
+.container .flex-container .flex-item {
+    background-color: #c5cae9;
+    width: 150px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container .flex-container .flex-item.flex-item:not(:last-of-type) {
+    margin-right: 12px;
+}

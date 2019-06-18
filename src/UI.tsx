@@ -4,10 +4,18 @@ import {fullWidthClassName, zeroRightClassName} from 'react-remove-scroll-bar/co
 import {IRemoveScrollEffectProps, RemoveScrollEffectCallbacks, IRemoveScrollUIProps} from "./types";
 import {effectCar} from "./medium";
 
+const nothing = () => {
+  return;
+};
+
 function RemoveScroll(props: IRemoveScrollUIProps) {
   const ref = React.useRef<HTMLDivElement>(null);
 
-  const [callbacks, setCallbacks] = React.useState<RemoveScrollEffectCallbacks>({} as any);
+  const [callbacks, setCallbacks] = React.useState<RemoveScrollEffectCallbacks>({
+    onScrollCapture: nothing,
+    onWheelCapture: nothing,
+    onTouchMoveCapture: nothing,
+  });
 
   const {forwardProps, children, className, removeScrollBar, enabled, shards, sideCar, noIsolation} = props;
 
@@ -33,7 +41,7 @@ function RemoveScroll(props: IRemoveScrollUIProps) {
         />
       )}
       {forwardProps
-        ? React.cloneElement(React.Children.only(children), containerProps)
+        ? React.cloneElement(React.Children.only(children as React.ReactElement), containerProps)
         : <div {...containerProps} className={className}>{children}</div>
       }
     </React.Fragment>

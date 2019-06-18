@@ -8,7 +8,7 @@
     "bootstrap": "ts-react-toolbox init",
     "dev": "ts-react-toolbox dev",
     "test:ci": "ts-react-toolbox test --runInBand --coverage",
-    "build": "ts-react-toolbox build",
+    "build": "rm -Rf ./dist && ts-react-toolbox build",
     "prepublish": "yarn build",
     "release": "ts-react-toolbox release",
     "lint": "ts-react-toolbox lint",
@@ -22,9 +22,14 @@
   "author": "Anton Korzunov <thekashey@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@types/enzyme": "^3.9.3",
+    "@types/enzyme-adapter-react-16": "^1.0.5",
+    "@types/react": "^16.8.20",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "size-limit": "^1.3.6",
+    "size-limit": "0.21",
     "ts-react-toolbox": "^0.2.2"
   },
   "engines": {
@@ -37,14 +42,17 @@
   "module": "dist/es2015/index.js",
   "types": "dist/es5/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "UI",
+    "sidecar"
   ],
   "repository": "https://github.com/theKashey/react-remove-scroll",
   "dependencies": {
     "react-remove-scroll": "^1.0.8",
     "react-remove-scroll-bar": "^1.2.0",
+    "react-style-singleton": "^2.0.0",
     "tslib": "^1.0.0",
-    "use-sidecar": "^0.1.1"
+    "use-sidecar": "^0.2.0"
   },
   "sideEffects": false,
   "resolutions": {

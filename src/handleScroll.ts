@@ -1,4 +1,6 @@
-  const elementCouldBeScrolled = (node: HTMLElement): boolean => {
+import {Axis} from './types';
+
+const elementCouldBeVScrolled = (node: HTMLElement): boolean => {
   const styles = window.getComputedStyle(node);
   return (
     styles.overflowY !== 'hidden' && // not-not-scrollable
@@ -6,7 +8,42 @@
   );
 };
 
-export const handleScroll = (endTarget: HTMLElement, event: any, sourceDelta: number) => {
+const elementCouldBeHScrolled = (node: HTMLElement): boolean => {
+  const styles = window.getComputedStyle(node);
+  return (
+    styles.overflowX !== 'hidden' && // not-not-scrollable
+    !(styles.overflowY === styles.overflowX && styles.overflowX === 'visible') // scrollable
+  );
+};
+
+const elementCouldBeScrolled = (axis: Axis, node: HTMLElement): boolean => (
+  axis === 'v' ? elementCouldBeVScrolled(node) : elementCouldBeHScrolled(node)
+);
+
+export const locationCouldBeScrolled = (axis: Axis, node: HTMLElement): boolean => {
+  let current = node;
+  do {
+    const isScrollable = elementCouldBeScrolled(axis, current);
+    if (isScrollable) {
+      const [, s, d] = getScrollVariables(axis, current);
+      if (s > d) {
+        return true;
+      }
+    }
+    current = current.parentNode as any;
+  } while (current && current !== document.body);
+
+  return false;
+};
+
+const getVScrollVariables = ({scrollTop, scrollHeight, clientHeight}: HTMLElement) => [scrollTop, scrollHeight, clientHeight];
+const getHScrollVariables = ({scrollLeft, scrollWidth, clientWidth}: HTMLElement) => [scrollLeft, scrollWidth, clientWidth];
+
+const getScrollVariables = (axis: Axis, node: HTMLElement) => (
+  axis === 'v' ? getVScrollVariables(node) : getHScrollVariables(node)
+);
+
+export const handleScroll = (axis: Axis, endTarget: HTMLElement, event: any, sourceDelta: number) => {
   const delta = sourceDelta;
   // find scrollable target
   let target: HTMLElement = event.target as any;
@@ -19,13 +56,13 @@ export const handleScroll = (endTarget: HTMLElement, event: any, sourceDelta: nu
   let availableScrollTop = 0;
 
   do {
-    const {scrollTop, scrollHeight, clientHeight} = target;
+    const [position, scroll, capacity] = getScrollVariables(axis, target);
 
-    const elementScroll = scrollHeight - clientHeight - scrollTop;
-    if (scrollTop || elementScroll) {
-      if (elementCouldBeScrolled(target)) {
+    const elementScroll = (scroll - capacity) - position;
+    if (position || elementScroll) {
+      if (elementCouldBeScrolled(axis, target)) {
         availableScroll += elementScroll;
-        availableScrollTop += scrollTop;
+        availableScrollTop += position;
       }
     }
 

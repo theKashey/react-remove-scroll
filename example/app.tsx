@@ -33,6 +33,7 @@ const PDiv = () => (
     }}
     // className={zeroRightClassName}
   >
+    <button onClick={() => alert('xxx')}>click me</button>
     PORTALED SCROLLABLE
     {fill(20, 1).map(x => <p>{x}****</p>)}
   </div>

@@ -33,7 +33,6 @@ let idCounter = 0;
 let lockStack: any[] = [];
 
 export function RemoveScrollSideCar(props: IRemoveScrollEffectProps) {
-  console.log('>>>', props);
   const shouldPreventQueue = React.useRef<Array<{ name: string, delta: number[], target: any, should: boolean }>>([]);
   const touchStartRef = React.useRef([0, 0]);
   const activeAxis = React.useRef<Axis | undefined>();

@@ -17,7 +17,7 @@ function RemoveScroll(props: IRemoveScrollUIProps) {
     onTouchMoveCapture: nothing,
   });
 
-  const {forwardProps, children, className, removeScrollBar, enabled, shards, sideCar, noIsolation} = props;
+  const {forwardProps, children, className, removeScrollBar, enabled, shards, sideCar, noIsolation, inert} = props;
 
   const SideCar: SideCarComponent<IRemoveScrollEffectProps> = sideCar;
 
@@ -35,6 +35,7 @@ function RemoveScroll(props: IRemoveScrollUIProps) {
 
           shards={shards}
           noIsolation={noIsolation}
+          inert={inert}
 
           setCallbacks={setCallbacks}
           lockRef={ref}
@@ -51,6 +52,7 @@ function RemoveScroll(props: IRemoveScrollUIProps) {
 RemoveScroll.defaultProps = {
   enabled: true,
   removeScrollBar: true,
+  inert: false,
 };
 
 namespace RemoveScroll {

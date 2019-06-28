@@ -15,7 +15,7 @@ describe('Endpoint UI', () => {
     console.log(document.body.className);
   });
 
-  it('forward', async () => {
+  it.only('forward', async () => {
     const wrapper = mount(<RemoveScroll forwardProps><div>content</div></RemoveScroll>);
     await tick();
     expect(wrapper.html()).toContain('content');

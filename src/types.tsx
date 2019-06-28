@@ -23,6 +23,7 @@ export interface ChildrenForward {
 
 export interface IRemoveScrollSelfProps {
   noIsolation?: boolean;
+  inert?: boolean;
 
   enabled?: boolean;
   className?: string;
@@ -40,6 +41,7 @@ export type IRemoveScrollUIProps = IRemoveScrollProps & {
 export interface IRemoveScrollEffectProps {
   noIsolation?: boolean;
   removeScrollBar?: boolean;
+  inert?: boolean;
 
   shards?: Array<React.RefObject<any> | HTMLElement>;
 

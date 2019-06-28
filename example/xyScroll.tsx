@@ -6,9 +6,9 @@ import "style-loader!css-loader!./styles.css";
 export default function XYBox() {
   return (
     <div className="App">
-      <div className="Sub">
-        <RemoveScroll enabled={true}>
 
+      <RemoveScroll enabled={true}>
+        <div className="Sub">
           <div className="container">
             <ul className="flex-container">
               <li className="flex-item">*1</li>
@@ -22,21 +22,20 @@ export default function XYBox() {
             </ul>
           </div>
 
-          <div className="container">
-            <ul className="flex-container">
-              <li className="flex-item">*1</li>
-              <li className="flex-item">2</li>
-              <li className="flex-item">3</li>
-              <li className="flex-item">4</li>
-              <li className="flex-item">5</li>
-              <li className="flex-item">6</li>
-              <li className="flex-item">7</li>
-              <li className="flex-item">8</li>
-            </ul>
-          </div>
-
-        </RemoveScroll>
-      </div>
+          {/*<div className="container">*/}
+          {/*  <ul className="flex-container">*/}
+          {/*    <li className="flex-item">*1</li>*/}
+          {/*    <li className="flex-item">2</li>*/}
+          {/*    <li className="flex-item">3</li>*/}
+          {/*    <li className="flex-item">4</li>*/}
+          {/*    <li className="flex-item">5</li>*/}
+          {/*    <li className="flex-item">6</li>*/}
+          {/*    <li className="flex-item">7</li>*/}
+          {/*    <li className="flex-item">8</li>*/}
+          {/*  </ul>*/}
+          {/*</div>*/}
+        </div>
+      </RemoveScroll>
     </div>
   );
 }

@@ -10,7 +10,7 @@ const tick = () => new Promise(resolve => setTimeout(resolve, 10));
 
 const car = sidecar(() => import ('../src/sidecar'));
 
-describe('Endpoint UI', () => {
+describe('UI', () => {
   it('smoke', async () => {
     const wrapper = mount(
       <RemoveScroll sideCar={car}>content</RemoveScroll>

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {TouchEvent} from "react";
 import {RemoveScrollBar} from 'react-remove-scroll-bar';
+import {styleSingleton} from 'react-style-singleton';
 import {handleScroll, locationCouldBeScrolled} from "./handleScroll";
 import {nonPassive} from './aggresiveCapture';
 import {Axis, IRemoveScrollEffectProps} from "./types";
@@ -23,89 +24,99 @@ const deltaCompare = (x: number[], y: number[]) => (
   x[0] === y[0] && x[1] === y[1]
 );
 
-export class RemoveScrollSideCar extends React.Component<IRemoveScrollEffectProps> {
-  private static stack: RemoveScrollSideCar[] = [];
+const generateStyle = (id: number) => `
+  .block-interactivity-${id} {pointer-events: none;}
+  .allow-interactivity-${id} {pointer-events: all;}
+`;
 
-  private shouldPreventQueue: Array<{ name: string, delta: number[], target: any, should: boolean }> = [];
-  private touchStart = [0, 0];
-  private activeAxis?: Axis = undefined;
+let idCounter = 0;
+let lockStack: any[] = [];
 
-  componentDidMount() {
-    RemoveScrollSideCar.stack.push(this);
-    this.props.setCallbacks({
-      onScrollCapture: this.scrollWheel,
-      onWheelCapture: this.scrollWheel,
-      onTouchMoveCapture: this.scrollTouchMove,
-    });
-    this.enable();
-  }
+export function RemoveScrollSideCar(props: IRemoveScrollEffectProps) {
+  console.log('>>>', props);
+  const shouldPreventQueue = React.useRef<Array<{ name: string, delta: number[], target: any, should: boolean }>>([]);
+  const touchStartRef = React.useRef([0, 0]);
+  const activeAxis = React.useRef<Axis | undefined>();
+  const [id] = React.useState(idCounter++);
+  const [Style] = React.useState(() => styleSingleton());
+  const lastProps = React.useRef<IRemoveScrollEffectProps>(props);
 
-  componentWillUnmount() {
-    RemoveScrollSideCar.stack = RemoveScrollSideCar.stack.filter(inst => inst !== this);
-    this.disable();
-  }
+  React.useEffect(() => {
+    lastProps.current = props;
+  }, [props]);
 
-  enable() {
-    if (typeof document !== 'undefined') {
-      document.addEventListener('wheel', this.shouldPrevent, nonPassive);
-      document.addEventListener('touchmove', this.shouldPrevent, nonPassive);
-      document.addEventListener('touchstart', this.scrollTouchStart, nonPassive);
+  React.useEffect(() => {
+    if (props.inert) {
+      document.body.classList.add(`block-interactivity-${id}`);
+      const allow = [
+        props.lockRef.current,
+        ...(props.shards || []).map(extractRef)
+      ].filter(Boolean);
+      allow.forEach(el => el!.classList.add(`allow-interactivity-${id}`));
+
+      return () => {
+        document.body.classList.remove(`block-interactivity-${id}`);
+        allow.forEach(el => el!.classList.remove(`allow-interactivity-${id}`));
+      }
     }
-  }
 
-  disable() {
-    if (typeof window !== 'undefined') {
-      document.removeEventListener('wheel', this.shouldPrevent, nonPassive as any);
-      document.removeEventListener('touchmove', this.shouldPrevent, nonPassive as any);
-      document.removeEventListener('touchstart', this.scrollTouchStart, nonPassive as any);
-    }
-  }
+    return;
+  }, [props.inert, props.lockRef.current, props.shards]);
 
-  shouldCancelEvent(event: any, parent: HTMLElement) {
+  const shouldCancelEvent = React.useCallback((event: any, parent: HTMLElement) => {
     const touch = getTouchXY(event);
-    const deltaX = 'deltaX' in event ? event.deltaX : this.touchStart[0] - touch[0];
-    const deltaY = 'deltaY' in event ? event.deltaY : this.touchStart[1] - touch[1];
+    const touchStart = touchStartRef.current;
+    const deltaX = 'deltaX' in event ? event.deltaX : (touchStart[0] - touch[0]);
+    const deltaY = 'deltaY' in event ? event.deltaY : (touchStart[1] - touch[1]);
 
     let currentAxis: Axis | undefined;
     let target: HTMLElement = event.target as any;
 
     const moveDirection: Axis = Math.abs(deltaX) > Math.abs(deltaY) ? 'h' : 'v';
-    const canBeScrolledInMainDirection = locationCouldBeScrolled(moveDirection, target);
+
+    let canBeScrolledInMainDirection = locationCouldBeScrolled(moveDirection, target);
+
+    if (!canBeScrolledInMainDirection) {
+      return true;
+    }
 
     if (canBeScrolledInMainDirection) {
       currentAxis = moveDirection;
     } else {
       currentAxis = moveDirection === 'v' ? 'h' : 'v';
+      canBeScrolledInMainDirection = locationCouldBeScrolled(moveDirection, target);
       // other axis might be not scrollable
-      if (!locationCouldBeScrolled(currentAxis, target)) {
-        currentAxis = undefined;
-      }
     }
 
-    // console.log('at', parent);
-    // console.log('active axis set to', moveDirection, deltaX, deltaY, this.touchStart, touch);
-    // console.log('could be moved?', canBeScrolledInMainDirection);
-    // console.log('result', currentAxis, this.activeAxis);
+    if (!canBeScrolledInMainDirection) {
+      return false;
+    }
 
-    if (!this.activeAxis && event.changedTouches && (deltaX || deltaY)) {
-      this.activeAxis = currentAxis;
+    if (!activeAxis.current && event.changedTouches && (deltaX || deltaY)) {
+      activeAxis.current = currentAxis;
     }
 
     if (!currentAxis) {
       return true
     }
 
-    return handleScroll(this.activeAxis || currentAxis, parent, event, deltaY);
-  };
+    const cancelingAxis = activeAxis.current || currentAxis;
 
-  shouldPrevent = (event: any) => {
-    const stack = RemoveScrollSideCar.stack;
-    if (!stack.length || stack[stack.length - 1] !== this) {
+    return handleScroll(
+      cancelingAxis,
+      parent,
+      event,
+      cancelingAxis == 'h' ? deltaX : deltaY
+    );
+  }, []);
+
+  const shouldPrevent = React.useCallback((event: any) => {
+    if (!lockStack.length || lockStack[lockStack.length - 1] !== Style) {
       // not the last active
       return;
     }
-    const delta = event.deltaY ? getDeltaXY(event) : getTouchXY(event);
-    const sourceEvent = this.shouldPreventQueue.filter(
+    const delta = 'deltaY' in event ? getDeltaXY(event) : getTouchXY(event);
+    const sourceEvent = shouldPreventQueue.current.filter(
       (e) => e.name === event.type && e.target === event.target && deltaCompare(e.delta, delta)
     )[0];
     // self event, and should be canceled
@@ -115,49 +126,79 @@ export class RemoveScrollSideCar extends React.Component<IRemoveScrollEffectProp
     }
     // outside or shard event
     if (!sourceEvent) {
-      const shardNodes = (this.props.shards || [])
+      const shardNodes = (lastProps.current.shards || [])
         .map(extractRef)
         .filter(Boolean)
         .filter(node => node.contains(event.target));
 
       const shouldStop = shardNodes.length > 0
-        ? this.shouldCancelEvent(event, shardNodes[0])
-        : !this.props.noIsolation;
+        ? shouldCancelEvent(event, shardNodes[0])
+        : !lastProps.current.noIsolation;
 
       if (shouldStop) {
         event.preventDefault();
       }
     }
-  };
+  }, []);
 
-  shouldCancel = (name: string, delta: number[], target: any, should: boolean) => {
+  const shouldCancel = React.useCallback((name: string, delta: number[], target: any, should: boolean) => {
     const event = {name, delta, target, should};
-    this.shouldPreventQueue.push(event);
+    shouldPreventQueue.current.push(event);
     setTimeout(() => {
-      this.shouldPreventQueue = this.shouldPreventQueue.filter(e => e !== event);
+      shouldPreventQueue.current = shouldPreventQueue.current.filter(e => e !== event);
     }, 1);
-  };
+  }, []);
 
-  scrollTouchStart = (event: any) => {
-    this.touchStart = getTouchXY(event);
-    this.activeAxis = undefined;
-  };
+  const scrollTouchStart = React.useCallback((event: any) => {
+    touchStartRef.current = getTouchXY(event);
+    activeAxis.current = undefined;
+  }, []);
 
-  scrollWheel = (event: WheelEvent) => {
-    this.shouldCancel(event.type, getDeltaXY(event), event.target, this.shouldCancelEvent(event, this.props.lockRef.current as any));
-  };
+  const scrollWheel = React.useCallback((event: WheelEvent) => {
+    shouldCancel(event.type, getDeltaXY(event), event.target, shouldCancelEvent(event, props.lockRef.current as any));
+  }, []);
 
-  scrollTouchMove = (event: TouchEvent<HTMLDivElement>) => {
-    this.shouldCancel(event.type, getTouchXY(event), event.target, this.shouldCancelEvent(event, this.props.lockRef.current as any));
-  };
+  const scrollTouchMove = React.useCallback((event: TouchEvent<HTMLDivElement>) => {
+    shouldCancel(event.type, getTouchXY(event), event.target, shouldCancelEvent(event, props.lockRef.current as any));
+  }, []);
 
-  render() {
-    const {removeScrollBar} = this.props;
+  React.useEffect(() => {
+    lockStack.push(Style);
+    props.setCallbacks({
+      onScrollCapture: scrollWheel,
+      onWheelCapture: scrollWheel,
+      onTouchMoveCapture: scrollTouchMove,
+    });
 
-    return (
-      removeScrollBar
-        ? <RemoveScrollBar gapMode="margin"/>
-        : null
-    )
-  }
+    document.addEventListener('wheel', shouldPrevent, nonPassive);
+    document.addEventListener('touchmove', shouldPrevent, nonPassive);
+    document.addEventListener('touchstart', scrollTouchStart, nonPassive);
+
+    return () => {
+      lockStack = lockStack.filter(inst => inst !== Style);
+
+      document.removeEventListener('wheel', shouldPrevent, nonPassive as any);
+      document.removeEventListener('touchmove', shouldPrevent, nonPassive as any);
+      document.removeEventListener('touchstart', scrollTouchStart, nonPassive as any);
+
+    }
+  }, []);
+
+
+  const {removeScrollBar, inert} = props;
+
+  return (
+    <React.Fragment>
+      {
+        inert
+          ? <Style styles={generateStyle(id)}/>
+          : null
+      }
+      {
+        removeScrollBar
+          ? <RemoveScrollBar gapMode="margin"/>
+          : null
+      }
+    </React.Fragment>
+  )
 }

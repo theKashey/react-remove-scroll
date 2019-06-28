@@ -23,5 +23,8 @@
       "es2015.promise"
     ],
     "jsx": "react"
+  },
+  "awesomeTypescriptLoaderOptions": {
+    "transpileOnly": true
   }
 }

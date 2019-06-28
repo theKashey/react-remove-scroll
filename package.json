@@ -14,7 +14,9 @@
     "lint": "ts-react-toolbox lint",
     "static": "ts-react-toolbox publish",
     "format": "ts-react-toolbox format",
-    "analyze": "ts-react-toolbox analyze"
+    "analyze": "ts-react-toolbox analyze",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "keywords": [
     "scroll"
@@ -22,14 +24,20 @@
   "author": "Anton Korzunov <thekashey@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@storybook/addon-actions": "^5.1.8",
+    "@storybook/addon-links": "^5.1.8",
+    "@storybook/addons": "^5.1.8",
+    "@storybook/react": "^5.1.8",
     "@types/enzyme": "^3.9.3",
     "@types/enzyme-adapter-react-16": "^1.0.5",
     "@types/react": "^16.8.20",
+    "babel-loader": "^8.0.6",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
+    "jsx-compress-loader": "^1.1.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "size-limit": "0.21",
     "ts-react-toolbox": "^0.2.2"
   },
   "engines": {
@@ -52,7 +60,7 @@
     "react-remove-scroll-bar": "^1.2.0",
     "react-style-singleton": "^2.0.0",
     "tslib": "^1.0.0",
-    "use-sidecar": "^0.2.0"
+    "use-sidecar": "^1.0.1"
   },
   "sideEffects": false,
   "resolutions": {

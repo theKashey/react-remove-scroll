@@ -16,10 +16,6 @@ const elementCouldBeHScrolled = (node: HTMLElement): boolean => {
   );
 };
 
-const elementCouldBeScrolled = (axis: Axis, node: HTMLElement): boolean => (
-  axis === 'v' ? elementCouldBeVScrolled(node) : elementCouldBeHScrolled(node)
-);
-
 export const locationCouldBeScrolled = (axis: Axis, node: HTMLElement): boolean => {
   let current = node;
   do {
@@ -38,6 +34,10 @@ export const locationCouldBeScrolled = (axis: Axis, node: HTMLElement): boolean 
 
 const getVScrollVariables = ({scrollTop, scrollHeight, clientHeight}: HTMLElement) => [scrollTop, scrollHeight, clientHeight];
 const getHScrollVariables = ({scrollLeft, scrollWidth, clientWidth}: HTMLElement) => [scrollLeft, scrollWidth, clientWidth];
+
+const elementCouldBeScrolled = (axis: Axis, node: HTMLElement): boolean => (
+  axis === 'v' ? elementCouldBeVScrolled(node) : elementCouldBeHScrolled(node)
+);
 
 const getScrollVariables = (axis: Axis, node: HTMLElement) => (
   axis === 'v' ? getVScrollVariables(node) : getHScrollVariables(node)

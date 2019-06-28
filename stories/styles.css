@@ -7,6 +7,17 @@
     -webkit-overflow-scrolling: touch;
 }
 
+.SubOuter {
+    width:400px;
+    height:400px;
+    overflow:auto;
+}
+
+.SubParent {
+    width:600px;
+    height:600px;
+}
+
 .Sub {
     width: 300px;
     height: 300px;
@@ -21,12 +32,24 @@
     /*overflow: scroll;*/
     -webkit-overflow-scrolling: touch;
 }
-.container .flex-container {
+.container-h .flex-container {
+     list-style: none;
+     padding: 0;
+     margin: 12px;
+     display: flex;
+     /*flex-direction: column;*/
+}
+
+.container-v {
+    width:100%;
+}
+
+.container-v .flex-container {
     list-style: none;
     padding: 0;
     margin: 12px;
     display: flex;
-    /*flex-direction: column;*/
+    flex-direction: column;
 }
 .container .flex-container .flex-item {
     background-color: #c5cae9;

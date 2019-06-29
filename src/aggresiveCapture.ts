@@ -15,4 +15,4 @@ if(typeof window !== 'undefined') {
     passiveSupported = false;
   }
 }
-export const aggressive = passiveSupported ? { passive: false } : false;
+export const nonPassive = passiveSupported ? { passive: false } : false;

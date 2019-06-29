@@ -56,8 +56,7 @@
   ],
   "repository": "https://github.com/theKashey/react-remove-scroll",
   "dependencies": {
-    "react-remove-scroll": "^1.0.8",
-    "react-remove-scroll-bar": "^1.2.0",
+    "react-remove-scroll-bar": "^2.0.0",
     "react-style-singleton": "^2.0.0",
     "tslib": "^1.0.0",
     "use-sidecar": "^1.0.1"

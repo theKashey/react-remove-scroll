@@ -1,3 +1,27 @@
+<div align="center">
+  <h1>React-remove-📜</h1>
+  <br/>
+   dont even scroll
+  <br/>
+  
+  <a href="https://www.npmjs.com/package/react-remove-scroll">
+    <img src="https://img.shields.io/npm/v/react-remove-scroll.svg?style=flat-square" />
+  </a>
+    
+  <a href="https://travis-ci.org/theKashey/react-remove-scroll">
+   <img src="https://img.shields.io/travis/theKashey/react-remove-scroll.svg?style=flat-square" alt="Build status">
+  </a> 
+
+  <a href="https://www.npmjs.com/package/react-remove-scroll">
+   <img src="https://img.shields.io/npm/dm/react-remove-scroll.svg" alt="npm downloads">
+  </a> 
+
+  <a href="https://bundlephobia.com/result?p=react-remove-scroll">
+   <img src="https://img.shields.io/bundlephobia/minzip/react-remove-scroll.svg" alt="bundle size">
+  </a>   
+  <br/>
+</div>
+
 react-remove-scroll
 ====
 [![NPM version](https://img.shields.io/npm/v/react-remove-scroll.svg)](https://www.npmjs.com/package/react-remove-scroll)
@@ -38,7 +62,7 @@ React portals not friendly, might lead to production issues. Enable only for __r
 - (👁 UI) __400b__, visual elements only
 - (🚗 sidecar) 1.5kb, side effects
 ```js
-import {sidecar} from "use-sidecar";
+import {sidecar} from "react-remove-scroll";
 import {RemoveScroll} from 'react-remove-scroll/UI';
 
 const sidecar = sidecar(() => import('react-remove-scroll/sidecar'));

@@ -5,9 +5,11 @@ react-remove-scroll
 Disables scroll outside of `children` node.
 
 - 🖱 mouse and touch devices friendly
+- 📈 vertical and horizontal
 - 📜 removes document scroll bar maintaining it space
 - ✅ support nested scrollable elements
 - 🕳 supports react-portals (uses React Event system)
+- ☠️ it could block literally any scroll anywhere
 
 # Usage
 Just wrap content, which should be scrollable, and everything else would not. 

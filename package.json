@@ -44,7 +44,7 @@
     "node": ">=8.5.0"
   },
   "peerDependencies": {
-    "react": "^16.3.0"
+    "react": "^16.8.0"
   },
   "jsnext:main": "dist/es2015/index.js",
   "module": "dist/es2015/index.js",

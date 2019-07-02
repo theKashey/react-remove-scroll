@@ -17,7 +17,6 @@ describe('UI', () => {
     );
     await tick();
     expect(wrapper.html()).toContain('content');
-    console.log(document.body.className);
   });
 
   it('forward', async () => {
@@ -28,6 +27,5 @@ describe('UI', () => {
     );
     await tick();
     expect(wrapper.html()).toContain('content');
-    console.log(document.body.className);
   });
 });

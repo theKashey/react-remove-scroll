@@ -1,5 +1,7 @@
 import * as React from "react";
 import {RefObject} from "react";
+import {ForwardRefExoticComponent} from "react";
+import {RefAttributes} from "react";
 
 export type Axis = 'v' | 'h';
 
@@ -48,4 +50,11 @@ export interface IRemoveScrollEffectProps {
   lockRef: RefObject<HTMLElement>;
 
   setCallbacks(cb: RemoveScrollEffectCallbacks): void;
+}
+
+export interface RemoveScrollType extends ForwardRefExoticComponent<IRemoveScrollUIProps & RefAttributes<HTMLElement>> {
+  classNames: {
+    fullWidth: string,
+    zeroRight: string,
+  }
 }

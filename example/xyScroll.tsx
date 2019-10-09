@@ -9,18 +9,30 @@ export default function XYBox() {
 
       <RemoveScroll enabled={true}>
         <div className="Sub">
-          <div className="container">
-            <ul className="flex-container">
-              <li className="flex-item">*1</li>
-              <li className="flex-item">2</li>
-              <li className="flex-item">3</li>
-              <li className="flex-item">4</li>
-              <li className="flex-item">5</li>
-              <li className="flex-item">6</li>
-              <li className="flex-item">7</li>
-              <li className="flex-item">8</li>
-            </ul>
+          <div className="SubSub">
+            <div className="container">
+              <ul className="flex-container">
+                <li className="flex-item">*1</li>
+                <li className="flex-item">2</li>
+                <li className="flex-item">3</li>
+                <li className="flex-item">4</li>
+                <li className="flex-item">5</li>
+                <li className="flex-item">6</li>
+                <li className="flex-item">7</li>
+                <li className="flex-item">8</li>
+              </ul>
+            </div>
           </div>
+          <ul className="flex-container">
+            <li className="flex-item">*1</li>
+            <li className="flex-item">2</li>
+            <li className="flex-item">3</li>
+            <li className="flex-item">4</li>
+            <li className="flex-item">5</li>
+            <li className="flex-item">6</li>
+            <li className="flex-item">7</li>
+            <li className="flex-item">8</li>
+          </ul>
 
           {/*<div className="container">*/}
           {/*  <ul className="flex-container">*/}

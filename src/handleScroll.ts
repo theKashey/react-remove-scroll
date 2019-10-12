@@ -56,7 +56,8 @@ export const handleScroll = (
   axis: Axis,
   endTarget: HTMLElement,
   event: any,
-  sourceDelta: number
+  sourceDelta: number,
+  noOverscroll: boolean
 ) => {
   const delta = sourceDelta;
   // find scrollable target
@@ -88,9 +89,18 @@ export const handleScroll = (
     (targetInLock && (endTarget.contains(target) || endTarget === target))
   );
 
-  if (isDeltaPositive && delta > availableScroll) {
+  if (0) {
+  } else if (
+    isDeltaPositive &&
+    ((noOverscroll && availableScroll === 0) ||
+      (!noOverscroll && delta > availableScroll))
+  ) {
     shouldCancelScroll = true;
-  } else if (!isDeltaPositive && -delta > availableScrollTop) {
+  } else if (
+    !isDeltaPositive &&
+    ((noOverscroll && availableScrollTop === 0) ||
+      (!noOverscroll && -delta > availableScrollTop))
+  ) {
     shouldCancelScroll = true;
   }
 

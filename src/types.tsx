@@ -45,6 +45,7 @@ export interface IRemoveScrollEffectProps {
   noIsolation?: boolean;
   removeScrollBar?: boolean;
   inert?: boolean;
+  noOverscroll?: boolean;
 
   shards?: Array<React.RefObject<any> | HTMLElement>;
 

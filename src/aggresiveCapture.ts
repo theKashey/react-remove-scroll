@@ -1,12 +1,12 @@
 let passiveSupported = false;
 
-if(typeof window !== 'undefined') {
+if (typeof window !== 'undefined') {
   try {
     const options = Object.defineProperty({}, 'passive', {
       get() {
         passiveSupported = true;
         return true;
-      },
+      }
     });
 
     window.addEventListener('test', options, options);

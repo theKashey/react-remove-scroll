@@ -1,4 +1,4 @@
-import {Axis} from './types';
+import { Axis } from './types';
 
 const elementCouldBeVScrolled = (node: HTMLElement): boolean => {
   const styles = window.getComputedStyle(node);
@@ -16,7 +16,10 @@ const elementCouldBeHScrolled = (node: HTMLElement): boolean => {
   );
 };
 
-export const locationCouldBeScrolled = (axis: Axis, node: HTMLElement): boolean => {
+export const locationCouldBeScrolled = (
+  axis: Axis,
+  node: HTMLElement
+): boolean => {
   let current = node;
   do {
     const isScrollable = elementCouldBeScrolled(axis, current);
@@ -32,18 +35,29 @@ export const locationCouldBeScrolled = (axis: Axis, node: HTMLElement): boolean 
   return false;
 };
 
-const getVScrollVariables = ({scrollTop, scrollHeight, clientHeight}: HTMLElement) => [scrollTop, scrollHeight, clientHeight];
-const getHScrollVariables = ({scrollLeft, scrollWidth, clientWidth}: HTMLElement) => [scrollLeft, scrollWidth, clientWidth];
+const getVScrollVariables = ({
+  scrollTop,
+  scrollHeight,
+  clientHeight
+}: HTMLElement) => [scrollTop, scrollHeight, clientHeight];
+const getHScrollVariables = ({
+  scrollLeft,
+  scrollWidth,
+  clientWidth
+}: HTMLElement) => [scrollLeft, scrollWidth, clientWidth];
 
-const elementCouldBeScrolled = (axis: Axis, node: HTMLElement): boolean => (
-  axis === 'v' ? elementCouldBeVScrolled(node) : elementCouldBeHScrolled(node)
-);
+const elementCouldBeScrolled = (axis: Axis, node: HTMLElement): boolean =>
+  axis === 'v' ? elementCouldBeVScrolled(node) : elementCouldBeHScrolled(node);
 
-const getScrollVariables = (axis: Axis, node: HTMLElement) => (
-  axis === 'v' ? getVScrollVariables(node) : getHScrollVariables(node)
-);
+const getScrollVariables = (axis: Axis, node: HTMLElement) =>
+  axis === 'v' ? getVScrollVariables(node) : getHScrollVariables(node);
 
-export const handleScroll = (axis: Axis, endTarget: HTMLElement, event: any, sourceDelta: number) => {
+export const handleScroll = (
+  axis: Axis,
+  endTarget: HTMLElement,
+  event: any,
+  sourceDelta: number
+) => {
   const delta = sourceDelta;
   // find scrollable target
   let target: HTMLElement = event.target as any;
@@ -58,7 +72,7 @@ export const handleScroll = (axis: Axis, endTarget: HTMLElement, event: any, sou
   do {
     const [position, scroll, capacity] = getScrollVariables(axis, target);
 
-    const elementScroll = (scroll - capacity) - position;
+    const elementScroll = scroll - capacity - position;
     if (position || elementScroll) {
       if (elementCouldBeScrolled(axis, target)) {
         availableScroll += elementScroll;
@@ -69,10 +83,10 @@ export const handleScroll = (axis: Axis, endTarget: HTMLElement, event: any, sou
     target = target.parentNode as any;
   } while (
     // portaled content
-  (!targetInLock && target !== document.body) ||
-  // self content
-  (targetInLock && (endTarget.contains(target) || endTarget === target))
-    );
+    (!targetInLock && target !== document.body) ||
+    // self content
+    (targetInLock && (endTarget.contains(target) || endTarget === target))
+  );
 
   if (isDeltaPositive && delta > availableScroll) {
     shouldCancelScroll = true;

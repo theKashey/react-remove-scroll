@@ -1,30 +1,56 @@
 import * as React from 'react';
-import {SideCarComponent} from 'use-sidecar';
-import {fullWidthClassName, zeroRightClassName} from 'react-remove-scroll-bar/constants';
-import {IRemoveScrollEffectProps, RemoveScrollEffectCallbacks, IRemoveScrollUIProps, RemoveScrollType} from "./types";
-import {effectCar} from "./medium";
-import {useMergeRefs} from "use-callback-ref";
+import { SideCarComponent } from 'use-sidecar';
+import {
+  fullWidthClassName,
+  zeroRightClassName
+} from 'react-remove-scroll-bar/constants';
+import {
+  IRemoveScrollEffectProps,
+  RemoveScrollEffectCallbacks,
+  IRemoveScrollUIProps,
+  RemoveScrollType
+} from './types';
+import { effectCar } from './medium';
+import { useMergeRefs } from 'use-callback-ref';
 
 const nothing = () => {
   return;
 };
 
-const RemoveScroll:RemoveScrollType = React.forwardRef<HTMLElement, IRemoveScrollUIProps>((props, parentRef) => {
+const RemoveScroll: RemoveScrollType = React.forwardRef<
+  HTMLElement,
+  IRemoveScrollUIProps
+>((props, parentRef) => {
   const ref = React.useRef<HTMLElement>(null);
 
-  const [callbacks, setCallbacks] = React.useState<RemoveScrollEffectCallbacks>({
-    onScrollCapture: nothing,
-    onWheelCapture: nothing,
-    onTouchMoveCapture: nothing,
-  });
+  const [callbacks, setCallbacks] = React.useState<RemoveScrollEffectCallbacks>(
+    {
+      onScrollCapture: nothing,
+      onWheelCapture: nothing,
+      onTouchMoveCapture: nothing
+    }
+  );
 
-  const {forwardProps, children, className, removeScrollBar, enabled, shards, sideCar, noIsolation, inert} = props;
+  const {
+    forwardProps,
+    children,
+    className,
+    removeScrollBar,
+    enabled,
+    shards,
+    sideCar,
+    noIsolation,
+    inert
+  } = props;
 
   const SideCar: SideCarComponent<IRemoveScrollEffectProps> = sideCar;
 
   const containerProps = {
-    ref: useMergeRefs<any>([ref, parentRef as React.MutableRefObject<HTMLElement>]),
-    ...callbacks,
+    ref: useMergeRefs<any>([
+      ref,
+      parentRef as React.MutableRefObject<HTMLElement>
+    ]),
+    ...callbacks
   };
 
   return (
@@ -32,36 +58,37 @@ const RemoveScroll:RemoveScrollType = React.forwardRef<HTMLElement, IRemoveScrol
       {enabled && (
         <SideCar
           sideCar={effectCar}
-
           removeScrollBar={removeScrollBar}
-
           shards={shards}
           noIsolation={noIsolation}
           inert={inert}
-
           setCallbacks={setCallbacks}
           lockRef={ref}
         />
       )}
-      {forwardProps
-        ? React.cloneElement(React.Children.only(children as React.ReactElement), containerProps)
-        : <div {...containerProps} className={className}>{children}</div>
-      }
+      {forwardProps ? (
+        React.cloneElement(
+          React.Children.only(children as React.ReactElement),
+          containerProps
+        )
+      ) : (
+        <div {...containerProps} className={className}>
+          {children}
+        </div>
+      )}
     </React.Fragment>
-  )
+  );
 }) as any;
 
 RemoveScroll.defaultProps = {
   enabled: true,
   removeScrollBar: true,
-  inert: false,
+  inert: false
 };
 
 RemoveScroll.classNames = {
   fullWidth: fullWidthClassName,
-  zeroRight: zeroRightClassName,
+  zeroRight: zeroRightClassName
 };
 
-export {
-  RemoveScroll,
-}
+export { RemoveScroll };

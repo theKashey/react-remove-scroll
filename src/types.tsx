@@ -1,7 +1,7 @@
-import * as React from "react";
-import {RefObject} from "react";
-import {ForwardRefExoticComponent} from "react";
-import {RefAttributes} from "react";
+import * as React from 'react';
+import { RefObject } from 'react';
+import { ForwardRefExoticComponent } from 'react';
+import { RefAttributes } from 'react';
 
 export type Axis = 'v' | 'h';
 
@@ -14,7 +14,7 @@ export interface RemoveScrollEffectCallbacks {
 }
 
 export interface ChildrenNode {
-  forwardProps?:false;
+  forwardProps?: false;
   children: React.ReactNode;
 }
 
@@ -34,11 +34,12 @@ export interface IRemoveScrollSelfProps {
   shards?: Array<React.RefObject<any> | HTMLElement>;
 }
 
-export type IRemoveScrollProps = IRemoveScrollSelfProps & (ChildrenForward | ChildrenNode);
+export type IRemoveScrollProps = IRemoveScrollSelfProps &
+  (ChildrenForward | ChildrenNode);
 
 export type IRemoveScrollUIProps = IRemoveScrollProps & {
   sideCar: React.FC<any>;
-}
+};
 
 export interface IRemoveScrollEffectProps {
   noIsolation?: boolean;
@@ -52,9 +53,12 @@ export interface IRemoveScrollEffectProps {
   setCallbacks(cb: RemoveScrollEffectCallbacks): void;
 }
 
-export interface RemoveScrollType extends ForwardRefExoticComponent<IRemoveScrollUIProps & RefAttributes<HTMLElement>> {
+export interface RemoveScrollType
+  extends ForwardRefExoticComponent<
+    IRemoveScrollUIProps & RefAttributes<HTMLElement>
+  > {
   classNames: {
-    fullWidth: string,
-    zeroRight: string,
-  }
+    fullWidth: string;
+    zeroRight: string;
+  };
 }

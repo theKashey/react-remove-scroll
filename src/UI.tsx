@@ -3,7 +3,7 @@ import {SideCarComponent} from 'use-sidecar';
 import {fullWidthClassName, zeroRightClassName} from 'react-remove-scroll-bar/constants';
 import {IRemoveScrollEffectProps, RemoveScrollEffectCallbacks, IRemoveScrollUIProps, RemoveScrollType} from "./types";
 import {effectCar} from "./medium";
-import {mergeRefs} from "use-callback-ref";
+import {useMergeRefs} from "use-callback-ref";
 
 const nothing = () => {
   return;
@@ -23,7 +23,7 @@ const RemoveScroll:RemoveScrollType = React.forwardRef<HTMLElement, IRemoveScrol
   const SideCar: SideCarComponent<IRemoveScrollEffectProps> = sideCar;
 
   const containerProps = {
-    ref: mergeRefs<any>([ref, parentRef as React.MutableRefObject<HTMLElement>]),
+    ref: useMergeRefs<any>([ref, parentRef as React.MutableRefObject<HTMLElement>]),
     ...callbacks,
   };
 

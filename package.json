@@ -38,7 +38,7 @@
     "jsx-compress-loader": "^1.1.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "ts-react-toolbox": "^0.2.2"
+    "ts-react-toolbox": "^0.2.10"
   },
   "engines": {
     "node": ">=8.5.0"

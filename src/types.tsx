@@ -45,7 +45,6 @@ export interface IRemoveScrollEffectProps {
   noIsolation?: boolean;
   removeScrollBar?: boolean;
   inert?: boolean;
-  noOverscroll?: boolean;
 
   shards?: Array<React.RefObject<any> | HTMLElement>;
 
@@ -54,12 +53,19 @@ export interface IRemoveScrollEffectProps {
   setCallbacks(cb: RemoveScrollEffectCallbacks): void;
 }
 
-export interface RemoveScrollType
-  extends ForwardRefExoticComponent<
-    IRemoveScrollUIProps & RefAttributes<HTMLElement>
-  > {
+interface WithClassNames {
   classNames: {
     fullWidth: string;
     zeroRight: string;
   };
 }
+
+export type RemoveScrollType = ForwardRefExoticComponent<
+  IRemoveScrollProps & RefAttributes<HTMLElement>
+> &
+  WithClassNames;
+
+export type RemoveScrollUIType = ForwardRefExoticComponent<
+  IRemoveScrollUIProps & RefAttributes<HTMLElement>
+> &
+  WithClassNames;

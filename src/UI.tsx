@@ -8,7 +8,7 @@ import {
   IRemoveScrollEffectProps,
   RemoveScrollEffectCallbacks,
   IRemoveScrollUIProps,
-  RemoveScrollType
+  RemoveScrollUIType
 } from './types';
 import { effectCar } from './medium';
 import { useMergeRefs } from 'use-callback-ref';
@@ -17,7 +17,7 @@ const nothing = () => {
   return;
 };
 
-const RemoveScroll: RemoveScrollType = React.forwardRef<
+const RemoveScroll: RemoveScrollUIType = React.forwardRef<
   HTMLElement,
   IRemoveScrollUIProps
 >((props, parentRef) => {

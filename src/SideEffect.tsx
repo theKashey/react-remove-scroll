@@ -121,7 +121,7 @@ export function RemoveScrollSideCar(props: IRemoveScrollEffectProps) {
         parent,
         event,
         cancelingAxis == 'h' ? deltaX : deltaY,
-        lastProps.current.noOverscroll
+        true
       );
     },
     []

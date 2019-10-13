@@ -1,14 +1,15 @@
 import * as React from 'react';
 import { RemoveScroll } from './UI';
-import { IRemoveScrollProps } from './types';
+import { IRemoveScrollProps, RemoveScrollType } from './types';
 import SideCar from './sidecar';
 
-function ReactRemoveScroll(props: IRemoveScrollProps) {
-  return <RemoveScroll {...props} sideCar={SideCar} />;
-}
+const ReactRemoveScroll: RemoveScrollType = React.forwardRef<
+  HTMLElement,
+  IRemoveScrollProps
+>((props, ref) => (
+  <RemoveScroll {...props} ref={ref} sideCar={SideCar} />
+)) as any;
 
-namespace ReactRemoveScroll {
-  export let classNames = RemoveScroll.classNames;
-}
+ReactRemoveScroll.classNames = RemoveScroll.classNames;
 
 export default ReactRemoveScroll;

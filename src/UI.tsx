@@ -7,16 +7,21 @@ import {
 import {
   IRemoveScrollEffectProps,
   RemoveScrollEffectCallbacks,
-  IRemoveScrollUIProps
+  IRemoveScrollUIProps,
+  RemoveScrollUIType
 } from './types';
 import { effectCar } from './medium';
+import { useMergeRefs } from 'use-callback-ref';
 
 const nothing = () => {
   return;
 };
 
-function RemoveScroll(props: IRemoveScrollUIProps) {
-  const ref = React.useRef<HTMLDivElement>(null);
+const RemoveScroll: RemoveScrollUIType = React.forwardRef<
+  HTMLElement,
+  IRemoveScrollUIProps
+>((props, parentRef) => {
+  const ref = React.useRef<HTMLElement>(null);
 
   const [callbacks, setCallbacks] = React.useState<RemoveScrollEffectCallbacks>(
     {
@@ -41,9 +46,13 @@ function RemoveScroll(props: IRemoveScrollUIProps) {
   const SideCar: SideCarComponent<IRemoveScrollEffectProps> = sideCar;
 
   const containerProps = {
-    ref,
+    ref: useMergeRefs<any>([
+      ref,
+      parentRef as React.MutableRefObject<HTMLElement>
+    ]),
     ...callbacks
   };
+
   return (
     <React.Fragment>
       {enabled && (
@@ -69,7 +78,7 @@ function RemoveScroll(props: IRemoveScrollUIProps) {
       )}
     </React.Fragment>
   );
-}
+}) as any;
 
 RemoveScroll.defaultProps = {
   enabled: true,
@@ -77,11 +86,9 @@ RemoveScroll.defaultProps = {
   inert: false
 };
 
-namespace RemoveScroll {
-  export let classNames = {
-    fullWidth: fullWidthClassName,
-    zeroRight: zeroRightClassName
-  };
-}
+RemoveScroll.classNames = {
+  fullWidth: fullWidthClassName,
+  zeroRight: zeroRightClassName
+};
 
 export { RemoveScroll };

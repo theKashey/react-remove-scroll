@@ -38,7 +38,7 @@
     "jsx-compress-loader": "^1.1.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "ts-react-toolbox": "^0.2.2"
+    "ts-react-toolbox": "^0.2.10"
   },
   "engines": {
     "node": ">=8.5.0"
@@ -59,6 +59,7 @@
     "react-remove-scroll-bar": "^2.0.0",
     "react-style-singleton": "^2.0.0",
     "tslib": "^1.0.0",
+    "use-callback-ref": "^1.2.1",
     "use-sidecar": "^1.0.1"
   },
   "sideEffects": [

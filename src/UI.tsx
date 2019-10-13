@@ -40,7 +40,8 @@ const RemoveScroll: RemoveScrollUIType = React.forwardRef<
     shards,
     sideCar,
     noIsolation,
-    inert
+    inert,
+    ...rest
   } = props;
 
   const SideCar: SideCarComponent<IRemoveScrollEffectProps> = sideCar;
@@ -50,6 +51,7 @@ const RemoveScroll: RemoveScrollUIType = React.forwardRef<
       ref,
       parentRef as React.MutableRefObject<HTMLElement>
     ]),
+    ...rest,
     ...callbacks
   };
 

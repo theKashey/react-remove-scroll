@@ -60,12 +60,11 @@ interface WithClassNames {
   };
 }
 
-export type RemoveScrollType = ForwardRefExoticComponent<
-  IRemoveScrollProps & RefAttributes<HTMLElement>
+type RefForwarded<T> = ForwardRefExoticComponent<
+  T & RefAttributes<HTMLElement>
 > &
   WithClassNames;
 
-export type RemoveScrollUIType = ForwardRefExoticComponent<
-  IRemoveScrollUIProps & RefAttributes<HTMLElement>
-> &
-  WithClassNames;
+export type RemoveScrollType = RefForwarded<IRemoveScrollProps>;
+
+export type RemoveScrollUIType = RefForwarded<IRemoveScrollUIProps>;

@@ -1,5 +1,3 @@
 import RemoveScroll from './Combination';
 
-export {
-  RemoveScroll,
-}
+export { RemoveScroll };

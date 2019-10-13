@@ -1,5 +1,5 @@
-import * as React from "react";
-import {RefObject} from "react";
+import * as React from 'react';
+import { RefObject } from 'react';
 
 export type Axis = 'v' | 'h';
 
@@ -12,7 +12,7 @@ export interface RemoveScrollEffectCallbacks {
 }
 
 export interface ChildrenNode {
-  forwardProps?:false;
+  forwardProps?: false;
   children: React.ReactNode;
 }
 
@@ -32,11 +32,12 @@ export interface IRemoveScrollSelfProps {
   shards?: Array<React.RefObject<any> | HTMLElement>;
 }
 
-export type IRemoveScrollProps = IRemoveScrollSelfProps & (ChildrenForward | ChildrenNode);
+export type IRemoveScrollProps = IRemoveScrollSelfProps &
+  (ChildrenForward | ChildrenNode);
 
 export type IRemoveScrollUIProps = IRemoveScrollProps & {
   sideCar: React.FC<any>;
-}
+};
 
 export interface IRemoveScrollEffectProps {
   noIsolation?: boolean;

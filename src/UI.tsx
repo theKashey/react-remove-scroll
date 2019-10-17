@@ -41,6 +41,7 @@ const RemoveScroll: RemoveScrollUIType = React.forwardRef<
     sideCar,
     noIsolation,
     inert,
+    allowPinchZoom,
     ...rest
   } = props;
 
@@ -65,6 +66,7 @@ const RemoveScroll: RemoveScrollUIType = React.forwardRef<
           noIsolation={noIsolation}
           inert={inert}
           setCallbacks={setCallbacks}
+          allowPinchZoom={!!allowPinchZoom}
           lockRef={ref}
         />
       )}

@@ -26,6 +26,7 @@ export interface ChildrenForward {
 export interface IRemoveScrollSelfProps {
   noIsolation?: boolean;
   inert?: boolean;
+  allowPinchZoom?: boolean;
 
   enabled?: boolean;
   className?: string;
@@ -44,6 +45,7 @@ export type IRemoveScrollUIProps = IRemoveScrollProps & {
 export interface IRemoveScrollEffectProps {
   noIsolation?: boolean;
   removeScrollBar?: boolean;
+  allowPinchZoom: boolean;
   inert?: boolean;
 
   shards?: Array<React.RefObject<any> | HTMLElement>;

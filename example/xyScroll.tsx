@@ -7,7 +7,7 @@ export default function XYBox() {
   return (
     <div className="App">
 
-      <RemoveScroll enabled={true}>
+      <RemoveScroll enabled={true} allowPinchZoom={false}>
         <div className="Sub">
           <div className="SubSub">
             <div className="container">

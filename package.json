@@ -16,7 +16,8 @@
     "format": "ts-react-toolbox format",
     "analyze": "ts-react-toolbox analyze",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
   },
   "keywords": [
     "scroll"
@@ -33,6 +34,7 @@
     "@types/enzyme-adapter-react-16": "^1.0.5",
     "@types/react": "^16.8.20",
     "babel-loader": "^8.0.6",
+    "conventional-changelog-cli": "^2.0.25",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "jsx-compress-loader": "^1.1.1",

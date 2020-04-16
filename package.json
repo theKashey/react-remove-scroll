@@ -46,7 +46,13 @@
     "node": ">=8.5.0"
   },
   "peerDependencies": {
+    "@types/react": "^16.8.0",
     "react": "^16.8.0"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
   },
   "jsnext:main": "dist/es2015/index.js",
   "module": "dist/es2015/index.js",
@@ -58,10 +64,10 @@
   ],
   "repository": "https://github.com/theKashey/react-remove-scroll",
   "dependencies": {
-    "react-remove-scroll-bar": "^2.0.0",
-    "react-style-singleton": "^2.0.0",
+    "react-remove-scroll-bar": "^2.1.0",
+    "react-style-singleton": "^2.1.0",
     "tslib": "^1.0.0",
-    "use-callback-ref": "^1.2.1",
+    "use-callback-ref": "^1.2.3",
     "use-sidecar": "^1.0.1"
   },
   "sideEffects": [

@@ -14,25 +14,67 @@ export interface RemoveScrollEffectCallbacks {
 }
 
 export interface ChildrenNode {
+  /**
+   * if forwardProps is false - children should be ReactNode
+   * and it would be wrapper with a div
+   * @see {@link IRemoveScrollSelfProps.as}
+   */
   forwardProps?: false;
   children: React.ReactNode;
 }
 
 export interface ChildrenForward {
+  /**
+   * if forwardProps is true - children should be single Element
+   * which would NOT with a div
+   * @see {@link IRemoveScrollSelfProps.as}
+   */
   forwardProps: true;
   children: React.ReactElement;
 }
 
 export interface IRemoveScrollSelfProps {
+  /**
+   * disables "event isolation" (suppressing of events happening outside of the Lock)
+   * @default false
+   */
   noIsolation?: boolean;
+  /**
+   * enabled complete Lock isolation using `pointer-events:none` for anything outside the Lock
+   * you probably don't need it, except you do
+   * @default false
+   * @see {IRemoveScrollSelfProps.noIsolation}
+   */
   inert?: boolean;
+  /**
+   * allows pinch-zoom, however might work not perfectly for normal scroll
+   */
   allowPinchZoom?: boolean;
 
+  /**
+   * switches on/off the behavior of the component
+   */
   enabled?: boolean;
-  className?: string;
+
+  /**
+   * Controls the body scroll bar removal
+   * @default false
+   */
   removeScrollBar?: boolean;
 
+
+  className?: string;
+  style?: React.CSSProperties;
+
+  /**
+   * array of refs to other Elements, which should be considered as a part of the Lock
+   */
   shards?: Array<React.RefObject<any> | HTMLElement>;
+  /**
+   * Control host node used for the lock.
+   * @default 'div'
+   */
+  as?: string | React.ElementType;
 }
 
 export type IRemoveScrollProps = IRemoveScrollSelfProps &

@@ -81,7 +81,7 @@ export function RemoveScrollSideCar(props: IRemoveScrollEffectProps) {
         'deltaY' in event ? event.deltaY : touchStart[1] - touch[1];
 
       let currentAxis: Axis | undefined;
-      let target: HTMLElement = event.target as any;
+      const target: HTMLElement = event.target as any;
 
       const moveDirection: Axis =
         Math.abs(deltaX) > Math.abs(deltaY) ? 'h' : 'v';
@@ -128,7 +128,7 @@ export function RemoveScrollSideCar(props: IRemoveScrollEffectProps) {
         cancelingAxis,
         parent,
         event,
-        cancelingAxis == 'h' ? deltaX : deltaY,
+        cancelingAxis === 'h' ? deltaX : deltaY,
         true
       );
     },

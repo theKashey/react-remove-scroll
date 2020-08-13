@@ -89,8 +89,7 @@ export const handleScroll = (
     (targetInLock && (endTarget.contains(target) || endTarget === target))
   );
 
-  if (0) {
-  } else if (
+  if (
     isDeltaPositive &&
     ((noOverscroll && availableScroll === 0) ||
       (!noOverscroll && delta > availableScroll))

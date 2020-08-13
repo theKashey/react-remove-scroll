@@ -51,7 +51,7 @@ import {RemoveScroll} from 'react-remove-scroll';
 - `[allowPinchZoom=false]` - enabled "pinch-n-zoom" behavior. By default it might be prevented. However - pinch and zoom might break "scroll isolation", and __disabled by default__.
 - `[noIsolation=false]` - disables outer event capturing. Event capturing is React friendly and unlikely be a problem.
 But if you are using _shadowbox_ of some sort - you dont need it.
-- `[inert=false]` - ☠️(be careful) disables events the rest of page completely using `pointer-events` expect the Lock(+shard). 
+- `[inert=false]` - ☠️(be careful) disables events the rest of page completely using `pointer-events` except the Lock(+shards). 
 React portals not friendly, might lead to production issues. Enable only for __rare__ cases, when you have to disable scrollbars somewhere on the page(except body, Lock and shards).  
 - `[forwardProps]` - will forward all props to the `children`
 - `[className]` - className for an internal div

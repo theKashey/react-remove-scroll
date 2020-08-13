@@ -17,6 +17,9 @@ const nothing = () => {
   return;
 };
 
+/**
+ * Removes scrollbar from the page and contain the scroll within the Lock
+ */
 const RemoveScroll: RemoveScrollUIType = React.forwardRef<
   HTMLElement,
   IRemoveScrollUIProps
@@ -42,16 +45,18 @@ const RemoveScroll: RemoveScrollUIType = React.forwardRef<
     noIsolation,
     inert,
     allowPinchZoom,
+    as: Container = 'div',
     ...rest
   } = props;
 
   const SideCar: SideCarComponent<IRemoveScrollEffectProps> = sideCar;
 
+  const containerRef = useMergeRefs<any>([
+    ref,
+    parentRef as React.MutableRefObject<HTMLElement>
+  ]);
+
   const containerProps = {
-    ref: useMergeRefs<any>([
-      ref,
-      parentRef as React.MutableRefObject<HTMLElement>
-    ]),
     ...rest,
     ...callbacks
   };
@@ -73,12 +78,12 @@ const RemoveScroll: RemoveScrollUIType = React.forwardRef<
       {forwardProps ? (
         React.cloneElement(
           React.Children.only(children as React.ReactElement),
-          containerProps
+          { ...containerProps, ref:containerRef}
         )
       ) : (
-        <div {...containerProps} className={className}>
+        <Container {...containerProps} className={className} ref={containerRef}>
           {children}
-        </div>
+        </Container>
       )}
     </React.Fragment>
   );

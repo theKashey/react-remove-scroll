@@ -1,3 +1,29 @@
+## [2.4.2](https://github.com/theKashey/react-remove-scroll/compare/v2.4.1...v2.4.2) (2021-05-08)
+
+
+
+## [2.4.1](https://github.com/theKashey/react-remove-scroll/compare/v2.4.0...v2.4.1) (2020-11-27)
+
+
+
+# [2.4.0](https://github.com/theKashey/react-remove-scroll/compare/v2.3.0...v2.4.0) (2020-08-13)
+
+
+### Features
+
+* expose 'as' and 'style' props ([3022f26](https://github.com/theKashey/react-remove-scroll/commit/3022f26e811de6e6154298743159bfe9b18bf332))
+
+
+
+# [2.3.0](https://github.com/theKashey/react-remove-scroll/compare/v2.2.0...v2.3.0) (2020-04-16)
+
+
+### Features
+
+* support CSP ([60ce4bf](https://github.com/theKashey/react-remove-scroll/commit/60ce4bf25caf845090cc5ff952ae78d8dca7b587))
+
+
+
 # [2.2.0](https://github.com/theKashey/react-remove-scroll/compare/v2.1.1...v2.2.0) (2019-10-17)
 
 

@@ -4,9 +4,6 @@ module.exports = ({ config }) => {
     test: /\.(ts|tsx)$/,
     use: [
       {
-        loader: require.resolve('jsx-compress-loader'),
-      },
-      {
         loader: require.resolve('awesome-typescript-loader'),
       },
     ],

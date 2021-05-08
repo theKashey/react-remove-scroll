@@ -10,6 +10,9 @@ const elementCouldBeVScrolled = (node: HTMLElement): boolean => {
 
 const elementCouldBeHScrolled = (node: HTMLElement): boolean => {
   const styles = window.getComputedStyle(node);
+  if (node.type === "range") {
+    return true;
+  }
   return (
     styles.overflowX !== 'hidden' && // not-not-scrollable
     !(styles.overflowY === styles.overflowX && styles.overflowX === 'visible') // scrollable

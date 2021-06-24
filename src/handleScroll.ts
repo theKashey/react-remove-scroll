@@ -1,10 +1,10 @@
-import { Axis } from './types';
+import { Axis } from "./types";
 
 const elementCouldBeVScrolled = (node: HTMLElement): boolean => {
   const styles = window.getComputedStyle(node);
   return (
-    styles.overflowY !== 'hidden' && // not-not-scrollable
-    !(styles.overflowY === styles.overflowX && styles.overflowY === 'visible') // scrollable
+    styles.overflowY !== "hidden" && // not-not-scrollable
+    !(styles.overflowY === styles.overflowX && styles.overflowY === "visible") // scrollable
   );
 };
 
@@ -15,8 +15,8 @@ const elementCouldBeHScrolled = (node: HTMLElement): boolean => {
     return true;
   }
   return (
-    styles.overflowX !== 'hidden' && // not-not-scrollable
-    !(styles.overflowY === styles.overflowX && styles.overflowX === 'visible') // scrollable
+    styles.overflowX !== "hidden" && // not-not-scrollable
+    !(styles.overflowY === styles.overflowX && styles.overflowX === "visible") // scrollable
   );
 };
 
@@ -26,6 +26,11 @@ export const locationCouldBeScrolled = (
 ): boolean => {
   let current = node;
   do {
+    // Skip over shadow root
+    if (window.ShadowRoot && current instanceof window.ShadowRoot) {
+      current = current.host as HTMLElement;
+    }
+
     const isScrollable = elementCouldBeScrolled(axis, current);
     if (isScrollable) {
       const [, s, d] = getScrollVariables(axis, current);
@@ -42,19 +47,19 @@ export const locationCouldBeScrolled = (
 const getVScrollVariables = ({
   scrollTop,
   scrollHeight,
-  clientHeight
+  clientHeight,
 }: HTMLElement) => [scrollTop, scrollHeight, clientHeight];
 const getHScrollVariables = ({
   scrollLeft,
   scrollWidth,
-  clientWidth
+  clientWidth,
 }: HTMLElement) => [scrollLeft, scrollWidth, clientWidth];
 
 const elementCouldBeScrolled = (axis: Axis, node: HTMLElement): boolean =>
-  axis === 'v' ? elementCouldBeVScrolled(node) : elementCouldBeHScrolled(node);
+  axis === "v" ? elementCouldBeVScrolled(node) : elementCouldBeHScrolled(node);
 
 const getScrollVariables = (axis: Axis, node: HTMLElement) =>
-  axis === 'v' ? getVScrollVariables(node) : getHScrollVariables(node);
+  axis === "v" ? getVScrollVariables(node) : getHScrollVariables(node);
 
 export const handleScroll = (
   axis: Axis,

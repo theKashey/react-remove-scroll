@@ -26,6 +26,11 @@ export const locationCouldBeScrolled = (
 ): boolean => {
   let current = node;
   do {
+    // Skip over shadow root
+    if (window.ShadowRoot && current instanceof window.ShadowRoot) {
+      current = current.host as HTMLElement;
+    }
+
     const isScrollable = elementCouldBeScrolled(axis, current);
     if (isScrollable) {
       const [, s, d] = getScrollVariables(axis, current);

@@ -1,3 +1,12 @@
+## [2.4.3](https://github.com/theKashey/react-remove-scroll/compare/v2.4.2...v2.4.3) (2021-07-04)
+
+
+### Bug Fixes
+
+* Skip shadow root when traversing up the dom tree ([eb6a5e7](https://github.com/theKashey/react-remove-scroll/commit/eb6a5e7ddc70432586c07e151e535d0e9d631833))
+
+
+
 ## [2.4.2](https://github.com/theKashey/react-remove-scroll/compare/v2.4.1...v2.4.2) (2021-05-08)
 
 

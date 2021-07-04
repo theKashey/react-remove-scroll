@@ -1,4 +1,4 @@
-import { Axis } from './types';
+import {Axis} from './types';
 
 const elementCouldBeVScrolled = (node: HTMLElement): boolean => {
   const styles = window.getComputedStyle(node);
@@ -27,7 +27,7 @@ export const locationCouldBeScrolled = (
   let current = node;
   do {
     // Skip over shadow root
-    if (window.ShadowRoot && current instanceof window.ShadowRoot) {
+    if (typeof ShadowRoot !== "undefined" && current instanceof ShadowRoot) {
       current = current.host as HTMLElement;
     }
 
@@ -45,15 +45,15 @@ export const locationCouldBeScrolled = (
 };
 
 const getVScrollVariables = ({
-  scrollTop,
-  scrollHeight,
-  clientHeight
-}: HTMLElement) => [scrollTop, scrollHeight, clientHeight];
+                               scrollTop,
+                               scrollHeight,
+                               clientHeight
+                             }: HTMLElement) => [scrollTop, scrollHeight, clientHeight];
 const getHScrollVariables = ({
-  scrollLeft,
-  scrollWidth,
-  clientWidth
-}: HTMLElement) => [scrollLeft, scrollWidth, clientWidth];
+                               scrollLeft,
+                               scrollWidth,
+                               clientWidth
+                             }: HTMLElement) => [scrollLeft, scrollWidth, clientWidth];
 
 const elementCouldBeScrolled = (axis: Axis, node: HTMLElement): boolean =>
   axis === 'v' ? elementCouldBeVScrolled(node) : elementCouldBeHScrolled(node);
@@ -93,10 +93,10 @@ export const handleScroll = (
     target = target.parentNode as any;
   } while (
     // portaled content
-    (!targetInLock && target !== document.body) ||
-    // self content
-    (targetInLock && (endTarget.contains(target) || endTarget === target))
-  );
+  (!targetInLock && target !== document.body) ||
+  // self content
+  (targetInLock && (endTarget.contains(target) || endTarget === target))
+    );
 
   if (
     isDeltaPositive &&

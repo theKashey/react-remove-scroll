@@ -68,7 +68,8 @@ export const handleScroll = (
   sourceDelta: number,
   noOverscroll: boolean
 ) => {
-  const delta = sourceDelta;
+  const delta = axis === 'h' && document.dir === 'rtl' ? sourceDelta * -1 : sourceDelta;
+
   // find scrollable target
   let target: HTMLElement = event.target as any;
   const targetInLock = endTarget.contains(target);

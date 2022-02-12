@@ -62,3 +62,5 @@ export const RangeInput = () => (
     {filler(1)}
   </XYBox>
 )
+
+export const RTLHScroll = () => <div style={{direction:'rtl'}}><XYBox axis='h'>{filler(1)}</XYBox></div>

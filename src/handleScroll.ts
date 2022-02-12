@@ -61,6 +61,15 @@ const elementCouldBeScrolled = (axis: Axis, node: HTMLElement): boolean =>
 const getScrollVariables = (axis: Axis, node: HTMLElement) =>
   axis === 'v' ? getVScrollVariables(node) : getHScrollVariables(node);
 
+const getDirectionFactor = (axis: Axis, direction: string) => (
+  /**
+   * If the element's direction is rtl (right-to-left), then scrollLeft is 0 when the scrollbar is at its rightmost position,
+   * and then increasingly negative as you scroll towards the end of the content.
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollLeft
+   */
+  axis === 'h' && direction === 'rtl' ? -1 : 1
+);
+
 export const handleScroll = (
   axis: Axis,
   endTarget: HTMLElement,
@@ -68,7 +77,8 @@ export const handleScroll = (
   sourceDelta: number,
   noOverscroll: boolean
 ) => {
-  const delta = axis === 'h' && document.dir === 'rtl' ? sourceDelta * -1 : sourceDelta;
+  const directionFactor = getDirectionFactor(axis, window.getComputedStyle(endTarget).direction);
+  const delta = directionFactor * sourceDelta;
 
   // find scrollable target
   let target: HTMLElement = event.target as any;
@@ -83,7 +93,7 @@ export const handleScroll = (
   do {
     const [position, scroll, capacity] = getScrollVariables(axis, target);
 
-    const elementScroll = scroll - capacity - position;
+    const elementScroll = scroll - capacity - directionFactor*position;
     if (position || elementScroll) {
       if (elementCouldBeScrolled(axis, target)) {
         availableScroll += elementScroll;

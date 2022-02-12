@@ -1,8 +1,10 @@
-## [2.4.3](https://github.com/theKashey/react-remove-scroll/compare/v2.4.2...v2.4.3) (2021-07-04)
+## [2.4.3](https://github.com/theKashey/react-remove-scroll/compare/v2.4.2...v2.4.3) (2022-02-12)
 
 
 ### Bug Fixes
 
+* correct lock behavior for RTL direction ([23457a7](https://github.com/theKashey/react-remove-scroll/commit/23457a7770e010b36b950057d90f496d12d8a93c))
+* Scroll working in RTL ([fcae298](https://github.com/theKashey/react-remove-scroll/commit/fcae298d7d35de00ec35fd712bee54c7db2d491c))
 * Skip shadow root when traversing up the dom tree ([eb6a5e7](https://github.com/theKashey/react-remove-scroll/commit/eb6a5e7ddc70432586c07e151e535d0e9d631833))
 
 

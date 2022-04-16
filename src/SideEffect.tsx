@@ -86,6 +86,12 @@ export function RemoveScrollSideCar(props: IRemoveScrollEffectProps) {
       const moveDirection: Axis =
         Math.abs(deltaX) > Math.abs(deltaY) ? 'h' : 'v';
 
+      // allow horizontal touch move on Range inputs. They will not cause any scroll
+      if ('touches' in event && moveDirection === 'h' && (target as HTMLInputElement).type === 'range') {
+        return false;
+      }
+
+
       let canBeScrolledInMainDirection = locationCouldBeScrolled(
         moveDirection,
         target

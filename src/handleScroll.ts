@@ -10,10 +10,7 @@ const elementCouldBeVScrolled = (node: HTMLElement): boolean => {
 
 const elementCouldBeHScrolled = (node: HTMLElement): boolean => {
   const styles = window.getComputedStyle(node);
-  // we allow horizontal scroll on range elements
-  if ((node as HTMLInputElement).type === "range") {
-    return true;
-  }
+
   return (
     styles.overflowX !== 'hidden' && // not-not-scrollable
     !(styles.overflowY === styles.overflowX && styles.overflowX === 'visible') // scrollable

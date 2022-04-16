@@ -3,6 +3,9 @@
   "version": "2.4.4",
   "description": "Disables scroll outside of `children` node.",
   "main": "dist/es5/index.js",
+  "jsnext:main": "dist/es2015/index.js",
+  "module": "dist/es2015/index.js",
+  "types": "dist/es5/index.d.ts",
   "scripts": {
     "test": "ts-react-toolbox test",
     "bootstrap": "ts-react-toolbox init",
@@ -54,9 +57,6 @@
       "optional": true
     }
   },
-  "jsnext:main": "dist/es2015/index.js",
-  "module": "dist/es2015/index.js",
-  "types": "dist/es5/index.d.ts",
   "files": [
     "dist",
     "UI",
@@ -64,11 +64,11 @@
   ],
   "repository": "https://github.com/theKashey/react-remove-scroll",
   "dependencies": {
-    "react-remove-scroll-bar": "^2.1.0",
-    "react-style-singleton": "^2.1.0",
-    "tslib": "^1.0.0",
-    "use-callback-ref": "^1.2.3",
-    "use-sidecar": "^1.0.1"
+    "react-remove-scroll-bar": "^2.2.0",
+    "react-style-singleton": "^2.1.1",
+    "tslib": "^2.0.0",
+    "use-callback-ref": "^1.2.5",
+    "use-sidecar": "^1.0.5"
   },
   "sideEffects": [
     "**/sidecar.js"

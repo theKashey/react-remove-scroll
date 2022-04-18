@@ -1,17 +1,15 @@
 import * as React from 'react';
+import { fullWidthClassName, zeroRightClassName } from 'react-remove-scroll-bar/constants';
+import { useMergeRefs } from 'use-callback-ref';
 import { SideCarComponent } from 'use-sidecar';
-import {
-  fullWidthClassName,
-  zeroRightClassName
-} from 'react-remove-scroll-bar/constants';
+
+import { effectCar } from './medium';
 import {
   IRemoveScrollEffectProps,
   RemoveScrollEffectCallbacks,
   IRemoveScrollUIProps,
-  RemoveScrollUIType
+  RemoveScrollUIType,
 } from './types';
-import { effectCar } from './medium';
-import { useMergeRefs } from 'use-callback-ref';
 
 const nothing = () => {
   return;
@@ -20,19 +18,14 @@ const nothing = () => {
 /**
  * Removes scrollbar from the page and contain the scroll within the Lock
  */
-const RemoveScroll: RemoveScrollUIType = React.forwardRef<
-  HTMLElement,
-  IRemoveScrollUIProps
->((props, parentRef) => {
+const RemoveScroll: RemoveScrollUIType = React.forwardRef<HTMLElement, IRemoveScrollUIProps>((props, parentRef) => {
   const ref = React.useRef<HTMLElement>(null);
 
-  const [callbacks, setCallbacks] = React.useState<RemoveScrollEffectCallbacks>(
-    {
-      onScrollCapture: nothing,
-      onWheelCapture: nothing,
-      onTouchMoveCapture: nothing
-    }
-  );
+  const [callbacks, setCallbacks] = React.useState<RemoveScrollEffectCallbacks>({
+    onScrollCapture: nothing,
+    onWheelCapture: nothing,
+    onTouchMoveCapture: nothing,
+  });
 
   const {
     forwardProps,
@@ -51,14 +44,11 @@ const RemoveScroll: RemoveScrollUIType = React.forwardRef<
 
   const SideCar: SideCarComponent<IRemoveScrollEffectProps> = sideCar;
 
-  const containerRef = useMergeRefs<any>([
-    ref,
-    parentRef as React.MutableRefObject<HTMLElement>
-  ]);
+  const containerRef = useMergeRefs<any>([ref, parentRef as React.MutableRefObject<HTMLElement>]);
 
   const containerProps = {
     ...rest,
-    ...callbacks
+    ...callbacks,
   };
 
   return (
@@ -76,10 +66,10 @@ const RemoveScroll: RemoveScrollUIType = React.forwardRef<
         />
       )}
       {forwardProps ? (
-        React.cloneElement(
-          React.Children.only(children as React.ReactElement),
-          { ...containerProps, ref:containerRef}
-        )
+        React.cloneElement(React.Children.only(children as React.ReactElement), {
+          ...containerProps,
+          ref: containerRef,
+        })
       ) : (
         <Container {...containerProps} className={className} ref={containerRef}>
           {children}
@@ -92,12 +82,12 @@ const RemoveScroll: RemoveScrollUIType = React.forwardRef<
 RemoveScroll.defaultProps = {
   enabled: true,
   removeScrollBar: true,
-  inert: false
+  inert: false,
 };
 
 RemoveScroll.classNames = {
   fullWidth: fullWidthClassName,
-  zeroRight: zeroRightClassName
+  zeroRight: zeroRightClassName,
 };
 
 export { RemoveScroll };

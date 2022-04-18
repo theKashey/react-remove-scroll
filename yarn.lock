@@ -8339,10 +8339,10 @@ use-callback-ref@^1.3.0:
   dependencies:
     tslib "^2.0.0"
 
-use-sidecar@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/use-sidecar/-/use-sidecar-1.1.0.tgz#5a2d62a7c3d3404927dd81b994114bff86a24153"
-  integrity sha512-TqrspKkDsfCMlVkMnijqKvRv9EZ/17rh+jTQtApvfdhvRgj9fnxizNTTHLSuzIFYhpHSCO6TV0V+eJpBJvuNWA==
+use-sidecar@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/use-sidecar/-/use-sidecar-1.1.2.tgz#2f43126ba2d7d7e117aa5855e5d8f0276dfe73c2"
+  integrity sha512-epTbsLuzZ7lPClpz2TyryBfztm7m+28DlEv2ZCQ3MDr5ssiwyOwGH/e5F9CkfWjJ1t4clvI58yF822/GUkjjhw==
   dependencies:
     detect-node-es "^1.1.0"
     tslib "^2.0.0"

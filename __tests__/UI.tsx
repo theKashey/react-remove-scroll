@@ -1,32 +1,27 @@
+import { configure, mount } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import * as React from 'react';
-import {configure, mount} from 'enzyme';
-import * as Adapter from 'enzyme-adapter-react-16';
-import {RemoveScroll} from '../src/UI';
-import {sidecar} from "use-sidecar";
 
-configure({adapter: new Adapter()});
+import { sidecar } from 'use-sidecar';
 
-const tick = () => new Promise(resolve => setTimeout(resolve, 10));
+import { RemoveScroll } from '../src/UI';
 
-const car = sidecar(() => import ('../src/sidecar'));
+configure({ adapter: new Adapter() });
+
+const tick = () => new Promise((resolve) => setTimeout(resolve, 10));
+
+const car = sidecar(() => import('../src/sidecar'));
 
 describe('UI', () => {
   it('smoke', async () => {
-    const wrapper = mount(
-      <RemoveScroll sideCar={car}>content</RemoveScroll>
-    );
+    const wrapper = mount(<RemoveScroll sideCar={car}>content</RemoveScroll>);
     await tick();
     expect(wrapper.html()).toBe('<div>content</div>');
   });
 
   it('smoke as style class', async () => {
     const wrapper = mount(
-      <RemoveScroll
-        sideCar={car}
-        as="span"
-        style={{width:'auto'}}
-        className="name"
-      >
+      <RemoveScroll sideCar={car} as="span" style={{ width: 'auto' }} className="name">
         content
       </RemoveScroll>
     );

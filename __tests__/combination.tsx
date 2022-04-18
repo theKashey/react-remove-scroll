@@ -1,11 +1,12 @@
+import { configure, mount } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import * as React from 'react';
-import {configure, mount} from 'enzyme';
-import * as Adapter from 'enzyme-adapter-react-16';
-import {RemoveScroll} from '../src';
+
+import { RemoveScroll } from '../src';
 
 configure({ adapter: new Adapter() });
 
-const tick = () => new Promise(resolve => setTimeout(resolve, 10));
+const tick = () => new Promise((resolve) => setTimeout(resolve, 10));
 
 describe('Endpoint UI', () => {
   it('smoke', async () => {
@@ -27,7 +28,11 @@ describe('Endpoint UI', () => {
   });
 
   it('forward', async () => {
-    const wrapper = mount(<RemoveScroll forwardProps><div>content</div></RemoveScroll>);
+    const wrapper = mount(
+      <RemoveScroll forwardProps>
+        <div>content</div>
+      </RemoveScroll>
+    );
     expect(wrapper.html()).toContain('content');
     await tick();
     expect(wrapper.html()).toContain('content');

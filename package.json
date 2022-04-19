@@ -55,7 +55,9 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "UI",
+    "sidecar"
   ],
   "repository": "https://github.com/theKashey/react-remove-scroll",
   "dependencies": {

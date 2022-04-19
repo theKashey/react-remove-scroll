@@ -1,3 +1,9 @@
+## [2.5.1](https://github.com/theKashey/react-remove-scroll/compare/v2.5.0...v2.5.1) (2022-04-19)
+
+### Bug Fixes
+
+- restore entrypoints, fixes [#68](https://github.com/theKashey/react-remove-scroll/issues/68) ([6ef7d3c](https://github.com/theKashey/react-remove-scroll/commit/6ef7d3c8b935c9bc1eb75f1aa8e1ea6738ae2985))
+
 # [2.5.0](https://github.com/theKashey/react-remove-scroll/compare/v2.4.4...v2.5.0) (2022-04-18)
 
 ### Bug Fixes

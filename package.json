@@ -29,6 +29,7 @@
   "author": "Anton Korzunov <thekashey@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@types/react": "^18.0.8",
     "@babel/core": "^7.17.9",
     "@size-limit/preset-small-lib": "^2.1.6",
     "@storybook/react": "^6.4.22",

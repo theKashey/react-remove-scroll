@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { RefObject } from 'react';
+import { Ref, RefObject } from 'react';
 import { ForwardRefExoticComponent } from 'react';
 import { RefAttributes } from 'react';
 
@@ -34,6 +34,7 @@ export interface ChildrenForward {
 }
 
 export interface IRemoveScrollSelfProps {
+  ref?: Ref<HTMLElement>;
   /**
    * disables "event isolation" (suppressing of events happening outside of the Lock)
    * @default false
@@ -62,7 +63,6 @@ export interface IRemoveScrollSelfProps {
    */
   removeScrollBar?: boolean;
 
-
   className?: string;
   style?: React.CSSProperties;
 
@@ -77,8 +77,7 @@ export interface IRemoveScrollSelfProps {
   as?: string | React.ElementType;
 }
 
-export type IRemoveScrollProps = IRemoveScrollSelfProps &
-  (ChildrenForward | ChildrenNode);
+export type IRemoveScrollProps = IRemoveScrollSelfProps & (ChildrenForward | ChildrenNode);
 
 export type IRemoveScrollUIProps = IRemoveScrollProps & {
   sideCar: React.FC<any>;
@@ -104,10 +103,7 @@ interface WithClassNames {
   };
 }
 
-type RefForwarded<T> = ForwardRefExoticComponent<
-  T & RefAttributes<HTMLElement>
-> &
-  WithClassNames;
+type RefForwarded<T> = ForwardRefExoticComponent<T & RefAttributes<HTMLElement>> & WithClassNames;
 
 export type RemoveScrollType = RefForwarded<IRemoveScrollProps>;
 

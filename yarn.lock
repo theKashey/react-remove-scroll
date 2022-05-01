@@ -10385,10 +10385,10 @@ react-refresh@^0.11.0:
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.11.0.tgz#77198b944733f0f1f1a90e791de4541f9f074046"
   integrity sha512-F27qZr8uUqwhWZboondsPx8tnC3Ct3SxZA3V5WyEvujRyyNv0VYPhoBg1gZ8/MV5tubQp76Trw8lTv9hzRBa+A==
 
-react-remove-scroll-bar@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/react-remove-scroll-bar/-/react-remove-scroll-bar-2.3.0.tgz#4f1c8442e4a8bbf98f0cd7ba30fdaf7bf5bcffe5"
-  integrity sha512-v2vf8kgrRph5FQeLVZjSOmM0g3ZiBxwMk98VXhsiJDSPeRDUaXJrzYDk2Hhoe6qLggrhWtAXJZVxUwXmRXa93g==
+react-remove-scroll-bar@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/react-remove-scroll-bar/-/react-remove-scroll-bar-2.3.1.tgz#9f13b05b249eaa57c8d646c1ebb83006b3581f5f"
+  integrity sha512-IvGX3mJclEF7+hga8APZczve1UyGMkMG+tjS0o/U1iLgvZRpjFAQEUBJ4JETfvbNlfNnZnoDyWJCICkA15Mghg==
   dependencies:
     react-style-singleton "^2.2.0"
     tslib "^2.0.0"

@@ -9,7 +9,10 @@ import {
   RemoveScrollEffectCallbacks,
   IRemoveScrollUIProps,
   RemoveScrollUIType,
+  IRemoveScrollSelfProps,
 } from './types';
+
+export type { IRemoveScrollSelfProps, RemoveScrollUIType };
 
 const nothing = () => {
   return;

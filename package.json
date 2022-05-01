@@ -1,6 +1,6 @@
 {
   "name": "react-remove-scroll",
-  "version": "2.5.1",
+  "version": "2.5.2",
   "description": "Disables scroll outside of `children` node.",
   "main": "dist/es5/index.js",
   "jsnext:main": "dist/es2015/index.js",
@@ -29,13 +29,12 @@
   "author": "Anton Korzunov <thekashey@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "@types/react": "^18.0.8",
+    "@types/react": "^18.0.0",
     "@babel/core": "^7.17.9",
     "@size-limit/preset-small-lib": "^2.1.6",
     "@storybook/react": "^6.4.22",
     "@theuiteam/lib-builder": "^0.1.4",
     "@types/enzyme-adapter-react-16": "^1.0.6",
-    "@types/react": "^18.0.0",
     "babel-loader": "^8.2.4",
     "enzyme-adapter-react-16": "^1.15.6"
   },

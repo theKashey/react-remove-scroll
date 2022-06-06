@@ -1,3 +1,21 @@
+## [2.5.4](https://github.com/theKashey/react-remove-scroll/compare/v2.5.3...v2.5.4) (2022-06-06)
+
+### Bug Fixes
+
+- update react-remove-scroll-bar. Fixes [#71](https://github.com/theKashey/react-remove-scroll/issues/71) ([3f51035](https://github.com/theKashey/react-remove-scroll/commit/3f51035e5a433443657169ea8c61661acf301b14))
+
+## [2.5.3](https://github.com/theKashey/react-remove-scroll/compare/v2.5.2...v2.5.3) (2022-05-01)
+
+### Bug Fixes
+
+- add ref to the public interface ([db99c0e](https://github.com/theKashey/react-remove-scroll/commit/db99c0e484fd67ee87a889d4cb939c5a43f2734a))
+
+## [2.5.2](https://github.com/theKashey/react-remove-scroll/compare/v2.5.1...v2.5.2) (2022-05-01)
+
+### Bug Fixes
+
+- correct React 18 integration ([af8e23e](https://github.com/theKashey/react-remove-scroll/commit/af8e23e28be1d1fed917fc2967030d29680c2fc2))
+
 ## [2.5.1](https://github.com/theKashey/react-remove-scroll/compare/v2.5.0...v2.5.1) (2022-04-19)
 
 ### Bug Fixes

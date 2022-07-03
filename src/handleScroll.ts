@@ -1,22 +1,22 @@
 import { Axis } from './types';
 
-const elementCouldBeVScrolled = (node: HTMLElement): boolean => {
+const alwaysContainsScroll = (node: HTMLElement): boolean =>
+  // textarea will always _contain_ scroll inside self. It only can be hidden
+  node.tagName === 'TEXTAREA';
+
+const elementCanBeScrolled = (node: HTMLElement, overflow: 'overflowX' | 'overflowY'): boolean => {
   const styles = window.getComputedStyle(node);
 
   return (
-    styles.overflowY !== 'hidden' && // not-not-scrollable
-    !(styles.overflowY === styles.overflowX && styles.overflowY === 'visible') // scrollable
+    // not-not-scrollable
+    styles[overflow] !== 'hidden' &&
+    // contains scroll inside self
+    !(styles.overflowY === styles.overflowX && !alwaysContainsScroll(node) && styles[overflow] === 'visible')
   );
 };
 
-const elementCouldBeHScrolled = (node: HTMLElement): boolean => {
-  const styles = window.getComputedStyle(node);
-
-  return (
-    styles.overflowX !== 'hidden' && // not-not-scrollable
-    !(styles.overflowY === styles.overflowX && styles.overflowX === 'visible') // scrollable
-  );
-};
+const elementCouldBeVScrolled = (node: HTMLElement): boolean => elementCanBeScrolled(node, 'overflowY');
+const elementCouldBeHScrolled = (node: HTMLElement): boolean => elementCanBeScrolled(node, 'overflowX');
 
 export const locationCouldBeScrolled = (axis: Axis, node: HTMLElement): boolean => {
   let current = node;

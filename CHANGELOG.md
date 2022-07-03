@@ -1,3 +1,10 @@
+## [2.5.5](https://github.com/theKashey/react-remove-scroll/compare/v2.5.4...v2.5.5) (2022-07-03)
+
+### Bug Fixes
+
+- add special treatment for textareas, fixes [#74](https://github.com/theKashey/react-remove-scroll/issues/74) ([af8fd75](https://github.com/theKashey/react-remove-scroll/commit/af8fd751a49d6deb9f40d79ecef9b030f291354e))
+- do not prevent uncancelable events, fixes [#8](https://github.com/theKashey/react-remove-scroll/issues/8) ([9d12786](https://github.com/theKashey/react-remove-scroll/commit/9d127860addd39c7305aea9e57ee2f51cecd229d))
+
 ## [2.5.4](https://github.com/theKashey/react-remove-scroll/compare/v2.5.3...v2.5.4) (2022-06-06)
 
 ### Bug Fixes

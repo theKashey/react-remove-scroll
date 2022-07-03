@@ -119,7 +119,9 @@ export function RemoveScrollSideCar(props: IRemoveScrollEffectProps) {
 
     // self event, and should be canceled
     if (sourceEvent && sourceEvent.should) {
-      event.preventDefault();
+      if (event.cancelable) {
+        event.preventDefault();
+      }
 
       return;
     }
@@ -135,7 +137,9 @@ export function RemoveScrollSideCar(props: IRemoveScrollEffectProps) {
         shardNodes.length > 0 ? shouldCancelEvent(event, shardNodes[0]) : !lastProps.current.noIsolation;
 
       if (shouldStop) {
-        event.preventDefault();
+        if (event.cancelable) {
+          event.preventDefault();
+        }
       }
     }
   }, []);

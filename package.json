@@ -4,9 +4,8 @@
   "description": "Disables scroll outside of `children` node.",
   "main": "dist/es5/index.js",
   "jsnext:main": "dist/es2015/index.js",
-  "module": "dist/es2015/index.js",
   "types": "dist/es5/index.d.ts",
-  "module:es2019": "dist/es2019/index.js",
+  "module": "dist/es2019/index.js",
   "scripts": {
     "dev": "lib-builder dev",
     "test": "jest",

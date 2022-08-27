@@ -30,7 +30,7 @@ export function RemoveScrollSideCar(props: IRemoveScrollEffectProps) {
   const touchStartRef = React.useRef([0, 0]);
   const activeAxis = React.useRef<Axis | undefined>();
   const [id] = React.useState(idCounter++);
-  const [Style] = React.useState(() => styleSingleton());
+  const [Style] = React.useState(styleSingleton);
   const lastProps = React.useRef<IRemoveScrollEffectProps>(props);
 
   React.useEffect(() => {

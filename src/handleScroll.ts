@@ -19,6 +19,7 @@ const elementCouldBeVScrolled = (node: HTMLElement): boolean => elementCanBeScro
 const elementCouldBeHScrolled = (node: HTMLElement): boolean => elementCanBeScrolled(node, 'overflowX');
 
 export const locationCouldBeScrolled = (axis: Axis, node: HTMLElement): boolean => {
+  const ownerDocument = node.ownerDocument;
   let current = node;
 
   do {
@@ -38,7 +39,7 @@ export const locationCouldBeScrolled = (axis: Axis, node: HTMLElement): boolean 
     }
 
     current = current.parentNode as any;
-  } while (current && current !== document.body);
+  } while (current && current !== ownerDocument.body);
 
   return false;
 };

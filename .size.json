@@ -2,16 +2,16 @@
   {
     "name": "dist/es2015/index.js",
     "passed": true,
-    "size": 2947
+    "size": 2960
   },
   {
     "name": "dist/es2015/sidecar.js",
     "passed": true,
-    "size": 2433
+    "size": 2439
   },
   {
     "name": "dist/es2015/UI.js",
     "passed": true,
-    "size": 631
+    "size": 647
   }
 ]

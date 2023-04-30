@@ -4,6 +4,7 @@ import { ForwardRefExoticComponent } from 'react';
 import { RefAttributes } from 'react';
 
 export type Axis = 'v' | 'h';
+export type GapMode = 'padding' | 'margin';
 
 export interface RemoveScrollEffectCallbacks {
   onScrollCapture(event: any): void;
@@ -25,8 +26,9 @@ export interface ChildrenNode {
 
 export interface ChildrenForward {
   /**
-   * if forwardProps is true - children should be single Element
-   * which would NOT with a div
+   * if forwardProps is true - everything will be forwarded to a single child node
+   * otherwise - a Container, controlled by `as` prop will be rendered in place
+   * @default false
    * @see {@link IRemoveScrollSelfProps.as}
    */
   forwardProps: true;
@@ -75,6 +77,12 @@ export interface IRemoveScrollSelfProps {
    * @default 'div'
    */
   as?: string | React.ElementType;
+
+  /**
+   * controls the way "gap" is filled
+   * @default "margin"
+   */
+  gapMode?: GapMode;
 }
 
 export type IRemoveScrollProps = IRemoveScrollSelfProps & (ChildrenForward | ChildrenNode);
@@ -92,6 +100,7 @@ export interface IRemoveScrollEffectProps {
   shards?: Array<React.RefObject<any> | HTMLElement>;
 
   lockRef: RefObject<HTMLElement>;
+  gapMode?: GapMode;
 
   setCallbacks(cb: RemoveScrollEffectCallbacks): void;
 }

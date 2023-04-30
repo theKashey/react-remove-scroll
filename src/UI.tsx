@@ -42,6 +42,7 @@ const RemoveScroll: RemoveScrollUIType = React.forwardRef<HTMLElement, IRemoveSc
     inert,
     allowPinchZoom,
     as: Container = 'div',
+    gapMode,
     ...rest
   } = props;
 
@@ -66,6 +67,7 @@ const RemoveScroll: RemoveScrollUIType = React.forwardRef<HTMLElement, IRemoveSc
           setCallbacks={setCallbacks}
           allowPinchZoom={!!allowPinchZoom}
           lockRef={ref}
+          gapMode={gapMode}
         />
       )}
       {forwardProps ? (

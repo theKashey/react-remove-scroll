@@ -193,7 +193,7 @@ export function RemoveScrollSideCar(props: IRemoveScrollEffectProps) {
   return (
     <React.Fragment>
       {inert ? <Style styles={generateStyle(id)} /> : null}
-      {removeScrollBar ? <RemoveScrollBar gapMode="margin" /> : null}
+      {removeScrollBar ? <RemoveScrollBar gapMode={props.gapMode} /> : null}
     </React.Fragment>
   );
 }

@@ -104,7 +104,7 @@ export function RemoveScrollSideCar(props: IRemoveScrollEffectProps) {
     return handleScroll(cancelingAxis, parent, event, cancelingAxis === 'h' ? deltaX : deltaY, true);
   }, []);
 
-  const shouldPrevent = React.useCallback((_event: Event) => {
+  const shouldPrevent = React.useCallback((subscriberElement: Document | ShadowRoot) => (_event: Event) => {
     const event: WheelEvent | TouchEvent = _event as any;
 
     if (!lockStack.length || lockStack[lockStack.length - 1] !== Style) {
@@ -126,8 +126,10 @@ export function RemoveScrollSideCar(props: IRemoveScrollEffectProps) {
       return;
     }
 
+    const shouldPreventQueueContainsEventButSubscriberDoesntContainTarget = shouldPreventQueue.current.some((e) => e.name === event.type && deltaCompare(e.delta, delta) && !subscriberElement.contains(e.target))
+
     // outside or shard event
-    if (!sourceEvent) {
+    if (!sourceEvent && !shouldPreventQueueContainsEventButSubscriberDoesntContainTarget) {
       const shardNodes = (lastProps.current.shards || [])
         .map(extractRef)
         .filter(Boolean)
@@ -175,16 +177,27 @@ export function RemoveScrollSideCar(props: IRemoveScrollEffectProps) {
       onTouchMoveCapture: scrollTouchMove,
     });
 
-    document.addEventListener('wheel', shouldPrevent, nonPassive);
-    document.addEventListener('touchmove', shouldPrevent, nonPassive);
-    document.addEventListener('touchstart', scrollTouchStart, nonPassive);
+    const documentAndShadowRootsSubscribers = [document, ...getShadowRootsInNode(document)].map(documentOrShadowRoot => ({
+      shouldPrevent: shouldPrevent(documentOrShadowRoot),
+      scrollTouchStart: scrollTouchStart,
+      elementToSubscribeTo: documentOrShadowRoot,
+    }));
+
+    documentAndShadowRootsSubscribers.forEach(({ shouldPrevent, scrollTouchStart, elementToSubscribeTo }) => {
+      elementToSubscribeTo.addEventListener('wheel', shouldPrevent, nonPassive);
+      elementToSubscribeTo.addEventListener('touchmove', shouldPrevent, nonPassive);
+      elementToSubscribeTo.addEventListener('touchstart', scrollTouchStart, nonPassive);
+    })
+
 
     return () => {
       lockStack = lockStack.filter((inst) => inst !== Style);
 
-      document.removeEventListener('wheel', shouldPrevent, nonPassive as any);
-      document.removeEventListener('touchmove', shouldPrevent, nonPassive as any);
-      document.removeEventListener('touchstart', scrollTouchStart, nonPassive as any);
+      documentAndShadowRootsSubscribers.forEach(({ shouldPrevent, scrollTouchStart, elementToSubscribeTo }) => {
+        elementToSubscribeTo.removeEventListener('wheel', shouldPrevent, nonPassive as any);
+        elementToSubscribeTo.removeEventListener('touchmove', shouldPrevent, nonPassive as any);
+        elementToSubscribeTo.removeEventListener('touchstart', scrollTouchStart, nonPassive as any);
+      });
     };
   }, []);
 
@@ -196,4 +209,21 @@ export function RemoveScrollSideCar(props: IRemoveScrollEffectProps) {
       {removeScrollBar ? <RemoveScrollBar gapMode={props.gapMode} /> : null}
     </React.Fragment>
   );
+}
+
+function getShadowRootsInNode(node: Node): ShadowRoot[] {
+  const shadowRoots: ShadowRoot[] = [];
+  walkNodeTree(node, node => (node as HTMLElement).shadowRoot && shadowRoots.push((node as HTMLElement).shadowRoot!));
+
+  return shadowRoots;
+}
+
+function walkNodeTree(node: Node, cb: (node: Node) => void) {
+  cb(node);
+  node.childNodes.forEach(node => walkNodeTree(node, cb));
+  const maybeShadowRoot = (node as HTMLElement).shadowRoot;
+
+  if (maybeShadowRoot) {
+    maybeShadowRoot.childNodes.forEach(node => walkNodeTree(node, cb));
+  }
 }

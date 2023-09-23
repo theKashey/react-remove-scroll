@@ -200,12 +200,12 @@ export function RemoveScrollSideCar(props: IRemoveScrollEffectProps) {
 
 function getOutermostShadowParent(node: Node | null): HTMLElement | null {
   let shadowParent: HTMLElement | null = null;
-  while (node !== window.document && node !== null) {
+  while (node !== null) {
     if (node instanceof ShadowRoot) {
       shadowParent = node.host as HTMLElement;
       node = node.host;
     }
-    node = node?.parentNode;
+    node = node.parentNode;
   }
   return shadowParent
 }

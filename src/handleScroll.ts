@@ -90,6 +90,9 @@ export const handleScroll = (
   let availableScrollTop = 0;
 
   do {
+    if (target instanceof ShadowRoot) {
+      target = target.host as HTMLElement;
+    }
     const [position, scroll, capacity] = getScrollVariables(axis, target);
 
     const elementScroll = scroll - capacity - directionFactor * position;

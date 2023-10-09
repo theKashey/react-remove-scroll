@@ -90,9 +90,6 @@ export const handleScroll = (
   let availableScrollTop = 0;
 
   do {
-    if (target instanceof ShadowRoot) {
-      target = target.host as HTMLElement;
-    }
     const [position, scroll, capacity] = getScrollVariables(axis, target);
 
     const elementScroll = scroll - capacity - directionFactor * position;
@@ -104,7 +101,11 @@ export const handleScroll = (
       }
     }
 
-    target = target.parentNode as any;
+    if (target instanceof ShadowRoot) {
+      target = target.host as HTMLElement;
+    } else {
+      target = target.parentNode as HTMLElement;
+    }
   } while (
     // portaled content
     (!targetInLock && target !== document.body) ||

@@ -113,11 +113,15 @@ export const handleScroll = (
     (targetInLock && (endTarget.contains(target) || endTarget === target))
   );
 
-  if (isDeltaPositive && ((noOverscroll && availableScroll === 0) || (!noOverscroll && delta > availableScroll))) {
+  // handle epsilon around 0 (non standard zoom levels)
+  if (
+    isDeltaPositive &&
+    ((noOverscroll && Math.abs(availableScroll) < 1) || (!noOverscroll && delta > availableScroll))
+  ) {
     shouldCancelScroll = true;
   } else if (
     !isDeltaPositive &&
-    ((noOverscroll && availableScrollTop === 0) || (!noOverscroll && -delta > availableScrollTop))
+    ((noOverscroll && Math.abs(availableScrollTop) < 1) || (!noOverscroll && -delta > availableScrollTop))
   ) {
     shouldCancelScroll = true;
   }

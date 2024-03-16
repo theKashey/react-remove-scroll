@@ -1,3 +1,9 @@
+## [2.5.8](https://github.com/theKashey/react-remove-scroll/compare/v2.5.7...v2.5.8) (2024-03-16)
+
+### Bug Fixes
+
+- update react-remove-scroll-bar to fix nested cases ([be1f247](https://github.com/theKashey/react-remove-scroll/commit/be1f247ef908faa15b569295726b164a0a026978))
+
 ## [2.5.7](https://github.com/theKashey/react-remove-scroll/compare/v2.5.6...v2.5.7) (2023-10-10)
 
 ### Bug Fixes

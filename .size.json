@@ -1,3 +1,20 @@
-{
-  "error": "SyntaxError: Unexpected token p in JSON at position 10\n    at JSON.parse (<anonymous>)\n    at jsonLoader (/Users/akorzunov/dev/github/focus/react-remove-scroll/node_modules/lilconfig/src/index.js:41:41)\n    at Object.search (/Users/akorzunov/dev/github/focus/react-remove-scroll/node_modules/lilconfig/src/index.js:220:29)\n    at async getConfig (file:///Users/akorzunov/dev/github/focus/react-remove-scroll/node_modules/size-limit/get-config.js:146:18)\n    at async default (file:///Users/akorzunov/dev/github/focus/react-remove-scroll/node_modules/size-limit/run.js:74:14)"
-}
+[
+  {
+    "name": "dist/es2015/index.js",
+    "passed": true,
+    "size": 3421,
+    "sizeLimit": 3500
+  },
+  {
+    "name": "dist/es2015/sidecar.js",
+    "passed": true,
+    "size": 2892,
+    "sizeLimit": 3000
+  },
+  {
+    "name": "dist/es2015/UI.js",
+    "passed": true,
+    "size": 989,
+    "sizeLimit": 1000
+  }
+]

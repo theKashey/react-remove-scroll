@@ -1,3 +1,16 @@
+## [2.5.7](https://github.com/theKashey/react-remove-scroll/compare/v2.5.6...v2.5.7) (2023-10-10)
+
+### Bug Fixes
+
+- correct edge case behavior on non zero browser zoom levels ([cd24189](https://github.com/theKashey/react-remove-scroll/commit/cd24189765f59074bba22cbf03ce5f80e2950c7d))
+- correct shadow dom traversal ([55d302b](https://github.com/theKashey/react-remove-scroll/commit/55d302ba98f250eb366fc36337b4d4656889ae88))
+
+## [2.5.6](https://github.com/theKashey/react-remove-scroll/compare/v2.5.5...v2.5.6) (2023-04-30)
+
+### Bug Fixes
+
+- pass gapMode to react-remove-scroll-bar ([04412b1](https://github.com/theKashey/react-remove-scroll/commit/04412b14b3f164a632e711998ba414f0a9929438))
+
 ## [2.5.5](https://github.com/theKashey/react-remove-scroll/compare/v2.5.4...v2.5.5) (2022-07-03)
 
 ### Bug Fixes

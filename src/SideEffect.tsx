@@ -1,11 +1,13 @@
+// @deno-types="npm:@types/react@^18.2"
 import * as React from 'react';
+// @deno-types="npm:@types/react@^18.2"
 import { TouchEvent } from 'react';
 import { RemoveScrollBar } from 'react-remove-scroll-bar';
 import { styleSingleton } from 'react-style-singleton';
 
-import { nonPassive } from './aggresiveCapture';
-import { handleScroll, locationCouldBeScrolled } from './handleScroll';
-import { Axis, IRemoveScrollEffectProps } from './types';
+import { nonPassive } from './aggresiveCapture.ts';
+import { handleScroll, locationCouldBeScrolled } from './handleScroll.ts';
+import { Axis, IRemoveScrollEffectProps } from './types.tsx';
 
 export const getTouchXY = (event: TouchEvent | WheelEvent) =>
   'changedTouches' in event ? [event.changedTouches[0].clientX, event.changedTouches[0].clientY] : [0, 0];

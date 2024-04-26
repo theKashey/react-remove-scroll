@@ -1,0 +1,25 @@
+{
+  "name": "@bureaudouble-forks/react-remove-scroll",
+  "version": "0.0.1",
+  "nodeModulesDir": false,
+  "compilerOptions": {
+    "noErrorTruncation": true,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "dom.asynciterable",
+      "deno.ns"
+    ]
+  },
+  "imports": {
+    "react": "npm:react@^18.2",
+    "react-style-singleton": "jsr:@bureaudouble-forks/react-style-singleton@0.0.1",
+    "use-sidecar": "jsr:@bureaudouble-forks/use-sidecar@0.0.1",
+    "use-callback-ref": "jsr:@bureaudouble-forks/use-callback-ref@0.0.1",
+    "react-remove-scroll-bar": "jsr:@bureaudouble-forks/react-remove-scroll-bar@0.0.2"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./UI": "./src/UI.tsx"
+  }
+}

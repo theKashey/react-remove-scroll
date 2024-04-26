@@ -1,4 +1,4 @@
-import { Axis } from './types';
+import { Axis } from './types.tsx';
 
 const alwaysContainsScroll = (node: HTMLElement): boolean =>
   // textarea will always _contain_ scroll inside self. It only can be hidden

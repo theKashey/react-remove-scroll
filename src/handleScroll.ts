@@ -1,12 +1,14 @@
-import {Axis} from './types';
+import { Axis } from './types';
 
-const alwaysContainsScroll = (node: HTMLElement): boolean =>
+const alwaysContainsScroll = (node: Element): boolean =>
   // textarea will always _contain_ scroll inside self. It only can be hidden
   node.tagName === 'TEXTAREA';
 
-const elementCanBeScrolled = (node: HTMLElement, overflow: 'overflowX' | 'overflowY'): boolean => {
-  if (!(node instanceof HTMLElement)) return false;
-  
+const elementCanBeScrolled = (node: Element, overflow: 'overflowX' | 'overflowY'): boolean => {
+  if (!(node instanceof Element)) {
+    return false;
+  }
+
   const styles = window.getComputedStyle(node);
 
   return (
@@ -33,9 +35,9 @@ export const locationCouldBeScrolled = (axis: Axis, node: HTMLElement): boolean 
     const isScrollable = elementCouldBeScrolled(axis, current);
 
     if (isScrollable) {
-      const [, s, d] = getScrollVariables(axis, current);
+      const [, scrollHeight, clientHeight] = getScrollVariables(axis, current);
 
-      if (s > d) {
+      if (scrollHeight > clientHeight) {
         return true;
       }
     }
@@ -46,12 +48,14 @@ export const locationCouldBeScrolled = (axis: Axis, node: HTMLElement): boolean 
   return false;
 };
 
-const getVScrollVariables = ({ scrollTop, scrollHeight, clientHeight }: HTMLElement) => [
+type SV = [scrollTop: number, scrollHeight: number, clientHeight: number];
+
+const getVScrollVariables = ({ scrollTop, scrollHeight, clientHeight }: HTMLElement): SV => [
   scrollTop,
   scrollHeight,
   clientHeight,
 ];
-const getHScrollVariables = ({ scrollLeft, scrollWidth, clientWidth }: HTMLElement) => [
+const getHScrollVariables = ({ scrollLeft, scrollWidth, clientWidth }: HTMLElement): SV => [
   scrollLeft,
   scrollWidth,
   clientWidth,

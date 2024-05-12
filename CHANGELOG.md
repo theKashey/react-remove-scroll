@@ -1,3 +1,5 @@
+## [2.5.9](https://github.com/theKashey/react-remove-scroll/compare/v2.5.8...v2.5.9) (2024-03-16)
+
 ## [2.5.8](https://github.com/theKashey/react-remove-scroll/compare/v2.5.7...v2.5.8) (2024-03-16)
 
 ### Bug Fixes

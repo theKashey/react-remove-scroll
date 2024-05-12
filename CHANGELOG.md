@@ -1,3 +1,10 @@
+## [2.5.10](https://github.com/theKashey/react-remove-scroll/compare/v2.5.9...v2.5.10) (2024-05-12)
+
+### Bug Fixes
+
+- correct behavior in shadow dom ([ea7a398](https://github.com/theKashey/react-remove-scroll/commit/ea7a398ffe624678fb0b9450ea8812ab6ebdb1b5))
+- elementCanBeScrolled fails if node is not an HTMLElement ([baa56c3](https://github.com/theKashey/react-remove-scroll/commit/baa56c3daa7e1d6b802c6ba7f2efd989cc412a13))
+
 ## [2.5.9](https://github.com/theKashey/react-remove-scroll/compare/v2.5.8...v2.5.9) (2024-03-16)
 
 ## [2.5.8](https://github.com/theKashey/react-remove-scroll/compare/v2.5.7...v2.5.8) (2024-03-16)

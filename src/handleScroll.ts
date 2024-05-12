@@ -1,10 +1,12 @@
-import { Axis } from './types';
+import {Axis} from './types';
 
 const alwaysContainsScroll = (node: HTMLElement): boolean =>
   // textarea will always _contain_ scroll inside self. It only can be hidden
   node.tagName === 'TEXTAREA';
 
 const elementCanBeScrolled = (node: HTMLElement, overflow: 'overflowX' | 'overflowY'): boolean => {
+  if (!(node instanceof HTMLElement)) return false;
+  
   const styles = window.getComputedStyle(node);
 
   return (

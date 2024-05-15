@@ -1,8 +1,9 @@
+// @deno-types="npm:@types/react@^18.2"
 import * as React from 'react';
 
-import { RemoveScroll } from './UI';
-import SideCar from './sidecar';
-import { IRemoveScrollProps, RemoveScrollType } from './types';
+import { RemoveScroll } from './UI.tsx';
+import SideCar from './sidecar.tsx';
+import { IRemoveScrollProps, RemoveScrollType } from './types.tsx';
 
 const ReactRemoveScroll: RemoveScrollType = React.forwardRef<HTMLElement, IRemoveScrollProps>((props, ref) => (
   <RemoveScroll {...props} ref={ref} sideCar={SideCar} />

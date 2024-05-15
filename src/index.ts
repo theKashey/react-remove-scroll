@@ -1,3 +1,3 @@
-import RemoveScroll from './Combination';
+import RemoveScroll from './Combination.tsx';
 
 export { RemoveScroll };

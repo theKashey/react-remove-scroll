@@ -1,6 +1,10 @@
+// @deno-types="npm:@types/react@^18.2"
 import * as React from 'react';
+// @deno-types="npm:@types/react@^18.2"
 import { Ref, RefObject } from 'react';
+// @deno-types="npm:@types/react@^18.2"
 import { ForwardRefExoticComponent } from 'react';
+// @deno-types="npm:@types/react@^18.2"
 import { RefAttributes } from 'react';
 
 export type Axis = 'v' | 'h';

@@ -1,16 +1,17 @@
+// @deno-types="npm:@types/react@^18.2"
 import * as React from 'react';
 import { fullWidthClassName, zeroRightClassName } from 'react-remove-scroll-bar/constants';
 import { useMergeRefs } from 'use-callback-ref';
 import { SideCarComponent } from 'use-sidecar';
 
-import { effectCar } from './medium';
+import { effectCar } from './medium.ts';
 import {
   IRemoveScrollEffectProps,
   RemoveScrollEffectCallbacks,
   IRemoveScrollUIProps,
   RemoveScrollUIType,
   IRemoveScrollSelfProps,
-} from './types';
+} from './types.tsx';
 
 export type { IRemoveScrollSelfProps, RemoveScrollUIType };
 

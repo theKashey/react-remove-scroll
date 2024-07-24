@@ -7,6 +7,20 @@ import { nonPassive } from './aggresiveCapture';
 import { handleScroll, locationCouldBeScrolled } from './handleScroll';
 import { Axis, IRemoveScrollEffectProps } from './types';
 
+// https://stackoverflow.com/questions/9038625/detect-if-device-is-ios/9039885#9039885
+const isIOS = typeof window !== 'undefined' && (
+  [
+    'iPad Simulator',
+    'iPhone Simulator',
+    'iPod Simulator',
+    'iPad',
+    'iPhone',
+    'iPod',
+  ].includes(navigator.platform) ||
+  // iPad on iOS 13 detection
+  (navigator.userAgent.includes('Mac') && 'ontouchend' in document)
+)
+
 export const getTouchXY = (event: TouchEvent | WheelEvent) =>
   'changedTouches' in event ? [event.changedTouches[0].clientX, event.changedTouches[0].clientY] : [0, 0];
 
@@ -76,7 +90,12 @@ export function RemoveScrollSideCar(props: IRemoveScrollEffectProps) {
     let canBeScrolledInMainDirection = locationCouldBeScrolled(moveDirection, target);
 
     if (!canBeScrolledInMainDirection) {
-      return true;
+      // Breaks Apple Pencil and breaks selection editing on iPadOs and iOS
+      // https://github.com/theKashey/react-remove-scroll/issues/101
+      // https://github.com/theKashey/react-remove-scroll/issues/81
+      if (event.type == 'touchmove' && !isIOS) {
+        return true;
+      }
     }
 
     if (canBeScrolledInMainDirection) {

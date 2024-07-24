@@ -93,7 +93,7 @@ export function RemoveScrollSideCar(props: IRemoveScrollEffectProps) {
       // Breaks Apple Pencil and breaks selection editing on iPadOs and iOS
       // https://github.com/theKashey/react-remove-scroll/issues/101
       // https://github.com/theKashey/react-remove-scroll/issues/81
-      if (event.type == 'touchmove' && !isIOS) {
+      if (event.type != 'touchmove' || !isIOS) {
         return true;
       }
     }

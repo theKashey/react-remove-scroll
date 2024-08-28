@@ -54,7 +54,7 @@ export function RemoveScrollSideCar(props: IRemoveScrollEffectProps) {
   }, [props.inert, props.lockRef.current, props.shards]);
 
   const shouldCancelEvent = React.useCallback((event: WheelEvent | TouchEvent, parent: HTMLElement) => {
-    if ('touches' in event && event.touches.length === 2) {
+    if (('touches' in event && event.touches.length === 2) || (event.type === 'wheel' && event.ctrlKey)) {
       return !lastProps.current.allowPinchZoom;
     }
 

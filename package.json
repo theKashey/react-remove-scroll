@@ -1,6 +1,6 @@
 {
   "name": "react-remove-scroll",
-  "version": "2.5.10",
+  "version": "2.6.0",
   "description": "Disables scroll outside of `children` node.",
   "main": "dist/es5/index.js",
   "jsnext:main": "dist/es2015/index.js",

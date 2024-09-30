@@ -32,6 +32,7 @@ export function RemoveScrollSideCar(props: IRemoveScrollEffectProps) {
   const [id] = React.useState(idCounter++);
   const [Style] = React.useState(styleSingleton);
   const lastProps = React.useRef<IRemoveScrollEffectProps>(props);
+  const probeRef = React.useRef<HTMLElement>(null)
 
   React.useEffect(() => {
     lastProps.current = props;
@@ -39,13 +40,15 @@ export function RemoveScrollSideCar(props: IRemoveScrollEffectProps) {
 
   React.useEffect(() => {
     if (props.inert) {
-      document.body.classList.add(`block-interactivity-${id}`);
+      const doc = probeRef.current?.ownerDocument ?? window.document;
+
+      doc.body.classList.add(`block-interactivity-${id}`);
 
       const allow = [props.lockRef.current, ...(props.shards || []).map(extractRef)].filter(Boolean);
       allow.forEach((el) => el!.classList.add(`allow-interactivity-${id}`));
 
       return () => {
-        document.body.classList.remove(`block-interactivity-${id}`);
+        doc.body.classList.remove(`block-interactivity-${id}`);
         allow.forEach((el) => el!.classList.remove(`allow-interactivity-${id}`));
       };
     }
@@ -175,16 +178,17 @@ export function RemoveScrollSideCar(props: IRemoveScrollEffectProps) {
       onTouchMoveCapture: scrollTouchMove,
     });
 
-    document.addEventListener('wheel', shouldPrevent, nonPassive);
-    document.addEventListener('touchmove', shouldPrevent, nonPassive);
-    document.addEventListener('touchstart', scrollTouchStart, nonPassive);
+    const doc = probeRef.current?.ownerDocument ?? window.document;
+    doc.addEventListener('wheel', shouldPrevent, nonPassive);
+    doc.addEventListener('touchmove', shouldPrevent, nonPassive);
+    doc.addEventListener('touchstart', scrollTouchStart, nonPassive);
 
     return () => {
       lockStack = lockStack.filter((inst) => inst !== Style);
 
-      document.removeEventListener('wheel', shouldPrevent, nonPassive as any);
-      document.removeEventListener('touchmove', shouldPrevent, nonPassive as any);
-      document.removeEventListener('touchstart', scrollTouchStart, nonPassive as any);
+      doc.removeEventListener('wheel', shouldPrevent, nonPassive as any);
+      doc.removeEventListener('touchmove', shouldPrevent, nonPassive as any);
+      doc.removeEventListener('touchstart', scrollTouchStart, nonPassive as any);
     };
   }, []);
 
@@ -192,6 +196,7 @@ export function RemoveScrollSideCar(props: IRemoveScrollEffectProps) {
 
   return (
     <React.Fragment>
+      <span style={{ display: 'none' }} ref={probeRef} />
       {inert ? <Style styles={generateStyle(id)} /> : null}
       {removeScrollBar ? <RemoveScrollBar gapMode={props.gapMode} /> : null}
     </React.Fragment>

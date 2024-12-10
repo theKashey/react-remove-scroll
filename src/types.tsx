@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { Ref, RefObject } from 'react';
-import { ForwardRefExoticComponent } from 'react';
+import { Ref, RefObject, FunctionComponent } from 'react';
 import { RefAttributes } from 'react';
 
 export type Axis = 'v' | 'h';
@@ -99,7 +98,7 @@ export interface IRemoveScrollEffectProps {
 
   shards?: Array<React.RefObject<any> | HTMLElement>;
 
-  lockRef: RefObject<HTMLElement>;
+  lockRef: RefObject<HTMLElement | null>;
   gapMode?: GapMode;
 
   setCallbacks(cb: RemoveScrollEffectCallbacks): void;
@@ -112,7 +111,7 @@ interface WithClassNames {
   };
 }
 
-type RefForwarded<T> = ForwardRefExoticComponent<T & RefAttributes<HTMLElement>> & WithClassNames;
+type RefForwarded<T> = FunctionComponent<T & RefAttributes<HTMLElement>> & WithClassNames;
 
 export type RemoveScrollType = RefForwarded<IRemoveScrollProps>;
 

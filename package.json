@@ -29,7 +29,7 @@
   "author": "Anton Korzunov <thekashey@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "@types/react": "^18.0.0",
+    "@types/react": "^18.0.0 || ^19.0.0",
     "@babel/core": "^7.17.9",
     "@size-limit/preset-small-lib": "^11.0.2",
     "size-limit": "^11.0.2",
@@ -40,15 +40,15 @@
     "enzyme-adapter-react-16": "^1.15.6"
   },
   "resolutions": {
-    "@types/react": "^18.0.0",
+    "@types/react": "^18.0.0 || ^19.0.0",
     "tslib": "^2.1.0"
   },
   "engines": {
     "node": ">=10"
   },
   "peerDependencies": {
-    "@types/react": "^16.8.0 || ^17.0.0 || ^18.0.0",
-    "react": "^16.8.0 || ^17.0.0 || ^18.0.0"
+    "@types/react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0",
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0"
   },
   "peerDependenciesMeta": {
     "@types/react": {

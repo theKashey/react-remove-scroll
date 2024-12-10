@@ -7,7 +7,6 @@ import { effectCar } from './medium';
 import {
   IRemoveScrollEffectProps,
   RemoveScrollEffectCallbacks,
-  IRemoveScrollUIProps,
   RemoveScrollUIType,
   IRemoveScrollSelfProps,
 } from './types';
@@ -21,7 +20,7 @@ const nothing = () => {
 /**
  * Removes scrollbar from the page and contain the scroll within the Lock
  */
-const RemoveScroll: RemoveScrollUIType = React.forwardRef<HTMLElement, IRemoveScrollUIProps>((props, parentRef) => {
+const RemoveScroll: RemoveScrollUIType = ({ ref: parentRef, ...props }) => {
   const ref = React.useRef<HTMLElement>(null);
 
   const [callbacks, setCallbacks] = React.useState<RemoveScrollEffectCallbacks>({
@@ -34,12 +33,12 @@ const RemoveScroll: RemoveScrollUIType = React.forwardRef<HTMLElement, IRemoveSc
     forwardProps,
     children,
     className,
-    removeScrollBar,
-    enabled,
+    removeScrollBar = true,
+    enabled = true,
     shards,
     sideCar,
     noIsolation,
-    inert,
+    inert = false,
     allowPinchZoom,
     as: Container = 'div',
     gapMode,
@@ -48,11 +47,12 @@ const RemoveScroll: RemoveScrollUIType = React.forwardRef<HTMLElement, IRemoveSc
 
   const SideCar: SideCarComponent<IRemoveScrollEffectProps> = sideCar;
 
-  const containerRef = useMergeRefs<any>([ref, parentRef as React.MutableRefObject<HTMLElement>]);
+  const containerRef = useMergeRefs<any>([ref, parentRef as React.RefObject<HTMLElement>]);
 
   const containerProps = {
     ...rest,
     ...callbacks,
+    ref: containerRef,
   };
 
   return (
@@ -71,23 +71,14 @@ const RemoveScroll: RemoveScrollUIType = React.forwardRef<HTMLElement, IRemoveSc
         />
       )}
       {forwardProps ? (
-        React.cloneElement(React.Children.only(children as React.ReactElement), {
-          ...containerProps,
-          ref: containerRef,
-        })
+        React.cloneElement(React.Children.only(children as React.ReactElement), containerProps)
       ) : (
-        <Container {...containerProps} className={className} ref={containerRef}>
+        <Container {...containerProps} className={className}>
           {children}
         </Container>
       )}
     </React.Fragment>
   );
-}) as any;
-
-RemoveScroll.defaultProps = {
-  enabled: true,
-  removeScrollBar: true,
-  inert: false,
 };
 
 RemoveScroll.classNames = {

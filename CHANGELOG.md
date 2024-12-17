@@ -1,3 +1,17 @@
+## [2.6.2](https://github.com/theKashey/react-remove-scroll/compare/v2.6.1...v2.6.2) (2024-12-17)
+
+## [2.6.1](https://github.com/theKashey/react-remove-scroll/compare/v2.6.0...v2.6.1) (2024-12-15)
+
+### Bug Fixes
+
+- README typo ([a723e5b](https://github.com/theKashey/react-remove-scroll/commit/a723e5b03301bdd462c4f4c6166db6c772e24b55))
+
+### Features
+
+- add react v19 to peer deps ([6656c05](https://github.com/theKashey/react-remove-scroll/commit/6656c053018b5ff50342fc2182b090b4dc4c1229))
+
+# [2.6.0](https://github.com/theKashey/react-remove-scroll/compare/v2.5.10...v2.6.0) (2024-09-08)
+
 ## [2.5.10](https://github.com/theKashey/react-remove-scroll/compare/v2.5.9...v2.5.10) (2024-05-12)
 
 ### Bug Fixes

@@ -63,10 +63,10 @@
   "repository": "https://github.com/theKashey/react-remove-scroll",
   "dependencies": {
     "react-remove-scroll-bar": "^2.3.7",
-    "react-style-singleton": "^2.2.1",
+    "react-style-singleton": "^2.2.2",
     "tslib": "^2.1.0",
     "use-callback-ref": "^1.3.3",
-    "use-sidecar": "^1.1.2"
+    "use-sidecar": "^1.1.3"
   },
   "sideEffects": [
     "**/sidecar.js"

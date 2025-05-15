@@ -38,6 +38,11 @@ export interface ChildrenForward {
 export interface IRemoveScrollSelfProps {
   ref?: Ref<HTMLElement>;
   /**
+   * prevents 'position="relative"' being set on body
+   * @default false
+   */
+  noRelative?: boolean;
+  /**
    * disables "event isolation" (suppressing of events happening outside of the Lock)
    * @default false
    */
@@ -92,6 +97,7 @@ export type IRemoveScrollUIProps = IRemoveScrollProps & {
 };
 
 export interface IRemoveScrollEffectProps {
+  noRelative?: boolean;
   noIsolation?: boolean;
   removeScrollBar?: boolean;
   allowPinchZoom: boolean;

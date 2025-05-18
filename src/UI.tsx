@@ -38,6 +38,7 @@ const RemoveScroll: RemoveScrollUIType = React.forwardRef<HTMLElement, IRemoveSc
     enabled,
     shards,
     sideCar,
+    noRelative,
     noIsolation,
     inert,
     allowPinchZoom,
@@ -62,6 +63,7 @@ const RemoveScroll: RemoveScrollUIType = React.forwardRef<HTMLElement, IRemoveSc
           sideCar={effectCar}
           removeScrollBar={removeScrollBar}
           shards={shards}
+          noRelative={noRelative}
           noIsolation={noIsolation}
           inert={inert}
           setCallbacks={setCallbacks}

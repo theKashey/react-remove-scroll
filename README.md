@@ -49,6 +49,7 @@ import {RemoveScroll} from 'react-remove-scroll';
 - `children`
 - `[enabled]` - activate or deactivate component behaviour without removing it.
 - `[allowPinchZoom=false]` - enabled "pinch-n-zoom" behavior. By default it might be prevented. However - pinch and zoom might break "scroll isolation", and __disabled by default__.
+- `[noRelative=false]` - prevents setting `position: relative` on the body.
 - `[noIsolation=false]` - disables outer event capturing. Event capturing is React friendly and unlikely be a problem.
 But if you are using _shadowbox_ of some sort - you dont need it.
 - `[inert=false]` - ☠️(be careful) disables events the rest of page completely using `pointer-events` except the Lock(+shards). 

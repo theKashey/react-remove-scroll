@@ -107,11 +107,9 @@ export const handleScroll = (
       }
     }
 
-    if (target instanceof ShadowRoot) {
-      target = target.host as HTMLElement;
-    } else {
-      target = target.parentNode as HTMLElement;
-    }
+    // we will "bubble" from ShadowDom in case we are, or just to the parent in normal case
+    // this is the same logic used in focus-lock
+    target = ((target.parentNode as ShadowRoot).host || target.parentNode) as HTMLElement;
   } while (
     // portaled content
     (!targetInLock && target !== document.body) ||

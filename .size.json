@@ -1,14 +1,14 @@
 [
   {
     "name": "dist/es2015/index.js",
-    "passed": true,
-    "size": 3579,
-    "sizeLimit": 3600
+    "passed": false,
+    "size": 3616,
+    "sizeLimit": 3700
   },
   {
     "name": "dist/es2015/sidecar.js",
     "passed": true,
-    "size": 2927,
+    "size": 2970,
     "sizeLimit": 3000
   },
   {

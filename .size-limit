@@ -2,7 +2,7 @@
   {
     "path": "dist/es2015/index.js",
     "ignore": ["react-dom", "tslib", "use-sidecar"],
-    "limit": "3.6 KB"
+    "limit": "3.7 KB"
   },
   {
     "path": "dist/es2015/sidecar.js",

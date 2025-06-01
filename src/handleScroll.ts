@@ -86,7 +86,7 @@ export const handleScroll = (
   const delta = directionFactor * sourceDelta;
 
   // find scrollable target
-  let target: HTMLElement = event.target as any;
+  let target: HTMLElement | null = event.target as any;
   const targetInLock = endTarget.contains(target);
 
   let shouldCancelScroll = false;
@@ -96,6 +96,10 @@ export const handleScroll = (
   let availableScrollTop = 0;
 
   do {
+    if (!target) {
+      break;
+    }
+
     const [position, scroll, capacity] = getScrollVariables(axis, target);
 
     const elementScroll = scroll - capacity - directionFactor * position;
@@ -107,9 +111,13 @@ export const handleScroll = (
       }
     }
 
+    const parent = target.parentNode;
+
     // we will "bubble" from ShadowDom in case we are, or just to the parent in normal case
     // this is the same logic used in focus-lock
-    target = ((target.parentNode as ShadowRoot).host || target.parentNode) as HTMLElement;
+    target = (
+      parent && parent.nodeType === Node.DOCUMENT_FRAGMENT_NODE ? (parent as ShadowRoot).host : parent
+    ) as HTMLElement;
   } while (
     // portaled content
     (!targetInLock && target !== document.body) ||

@@ -60,8 +60,14 @@ export function RemoveScrollSideCar(props: IRemoveScrollEffectProps) {
 
     const touch = getTouchXY(event);
     const touchStart = touchStartRef.current;
-    const deltaX = 'deltaX' in event ? event.deltaX : touchStart[0] - touch[0];
-    const deltaY = 'deltaY' in event ? event.deltaY : touchStart[1] - touch[1];
+    let deltaX = 'deltaX' in event ? event.deltaX : touchStart[0] - touch[0];
+    let deltaY = 'deltaY' in event ? event.deltaY : touchStart[1] - touch[1];
+
+    // If Shift is pressed, interpret vertical scroll as horizontal scroll
+    if (event.shiftKey) {
+      deltaX = event.deltaY;
+      deltaY = 0;
+    }
 
     let currentAxis: Axis | undefined;
     const target: HTMLElement = event.target as any;

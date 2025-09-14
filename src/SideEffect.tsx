@@ -74,9 +74,9 @@ export function RemoveScrollSideCar(props: IRemoveScrollEffectProps) {
     }
 
     // allow drag selection (iOS); check if selection's anchorNode is the same as target or contains target
-    const selection = document.getSelection();
+    const selection = window.getSelection();
     const anchorNode = selection && selection.anchorNode;
-    const isTouchingSelection = anchorNode ? anchorNode.contains(target) : false;
+    const isTouchingSelection = anchorNode ? anchorNode === target || anchorNode.contains(target) : false;
 
     if (isTouchingSelection) {
       return false;

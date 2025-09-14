@@ -73,6 +73,15 @@ export function RemoveScrollSideCar(props: IRemoveScrollEffectProps) {
       return false;
     }
 
+    // allow drag selection (iOS); check if selection's anchorNode is the same as target or contains target
+    const selection = document.getSelection();
+    const anchorNode = selection && selection.anchorNode;
+    const isTouchingSelection = anchorNode ? anchorNode.contains(target) : false;
+
+    if (isTouchingSelection) {
+      return false;
+    }
+
     let canBeScrolledInMainDirection = locationCouldBeScrolled(moveDirection, target);
 
     if (!canBeScrolledInMainDirection) {

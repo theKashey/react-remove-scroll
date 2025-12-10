@@ -75,6 +75,16 @@ const getDirectionFactor = (axis: Axis, direction: string | null) =>
    */
   axis === 'h' && direction === 'rtl' ? -1 : 1;
 
+const elementIsReverseScrolled = (node: Element): boolean => {
+  if (!(node instanceof Element)) {
+    return false;
+  }
+
+  const styles = window.getComputedStyle(node);
+
+  return styles.flexDirection === 'column-reverse' || styles.flexDirection === 'row-reverse';
+};
+
 export const handleScroll = (
   axis: Axis,
   endTarget: HTMLElement,
@@ -106,8 +116,14 @@ export const handleScroll = (
 
     if (position || elementScroll) {
       if (elementCouldBeScrolled(axis, target)) {
-        availableScroll += elementScroll;
-        availableScrollTop += position;
+        if (elementIsReverseScrolled(target)) {
+          // For column-reverse/row-reverse, swap the available scroll calculations
+          availableScroll += position;
+          availableScrollTop += elementScroll;
+        } else {
+          availableScroll += elementScroll;
+          availableScrollTop += position;
+        }
       }
     }
 

@@ -85,7 +85,17 @@ export function RemoveScrollSideCar(props: IRemoveScrollEffectProps) {
     let canBeScrolledInMainDirection = locationCouldBeScrolled(moveDirection, target);
 
     if (!canBeScrolledInMainDirection) {
-      return true;
+      // If the main direction can't be scrolled, check the other axis.
+      // This prevents blocking vertical scroll when the initial touch delta
+      // is slightly more horizontal than vertical (diagonal swipe).
+      const otherAxis: Axis = moveDirection === 'v' ? 'h' : 'v';
+
+      if (locationCouldBeScrolled(otherAxis, target)) {
+        currentAxis = otherAxis;
+        canBeScrolledInMainDirection = true;
+      } else {
+        return true;
+      }
     }
 
     if (canBeScrolledInMainDirection) {

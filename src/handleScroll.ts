@@ -78,10 +78,10 @@ const getDirectionFactor = (axis: Axis, direction: string | null) =>
 export const handleScroll = (
   axis: Axis,
   endTarget: HTMLElement,
-  event: any,
+  event: WheelEvent | TouchEvent,
   sourceDelta: number,
   noOverscroll: boolean
-) => {
+): boolean => {
   const directionFactor = getDirectionFactor(axis, window.getComputedStyle(endTarget).direction);
   const delta = directionFactor * sourceDelta;
 

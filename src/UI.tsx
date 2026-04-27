@@ -34,13 +34,13 @@ const RemoveScroll: RemoveScrollUIType = React.forwardRef<HTMLElement, IRemoveSc
     forwardProps,
     children,
     className,
-    removeScrollBar,
-    enabled,
+    removeScrollBar = true,
+    enabled = true,
     shards,
     sideCar,
     noRelative,
     noIsolation,
-    inert,
+    inert = false,
     allowPinchZoom,
     as: Container = 'div',
     gapMode,
@@ -85,12 +85,6 @@ const RemoveScroll: RemoveScrollUIType = React.forwardRef<HTMLElement, IRemoveSc
     </React.Fragment>
   );
 }) as any;
-
-RemoveScroll.defaultProps = {
-  enabled: true,
-  removeScrollBar: true,
-  inert: false,
-};
 
 RemoveScroll.classNames = {
   fullWidth: fullWidthClassName,

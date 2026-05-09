@@ -26,7 +26,9 @@ let idCounter = 0;
 let lockStack: any[] = [];
 
 export function RemoveScrollSideCar(props: IRemoveScrollEffectProps) {
-  const shouldPreventQueue = React.useRef<Array<{ name: string; delta: number[]; target: any; should: boolean; shadowParent?: HTMLElement | null }>>([]);
+  const shouldPreventQueue = React.useRef<
+    Array<{ name: string; delta: number[]; target: any; should: boolean; shadowParent?: HTMLElement | null }>
+  >([]);
   const touchStartRef = React.useRef([0, 0]);
   const activeAxis = React.useRef<Axis | undefined>();
   const [id] = React.useState(idCounter++);
@@ -73,12 +75,12 @@ export function RemoveScrollSideCar(props: IRemoveScrollEffectProps) {
       return false;
     }
 
-    // allow drag selection (iOS); check if selection's anchorNode is the same as target or contains target
+    // allow drag selection (iOS): when there's an active selection and the touch is inside the
+    // locked element, skip preventDefault so OS-level handles can drag in either direction.
     const selection = window.getSelection();
-    const anchorNode = selection && selection.anchorNode;
-    const isTouchingSelection = anchorNode ? anchorNode === target || anchorNode.contains(target) : false;
+    const lockedNode = lastProps.current.lockRef && lastProps.current.lockRef.current;
 
-    if (isTouchingSelection) {
+    if (selection && !selection.isCollapsed && lockedNode && (lockedNode === target || lockedNode.contains(target))) {
       return false;
     }
 
@@ -123,7 +125,10 @@ export function RemoveScrollSideCar(props: IRemoveScrollEffectProps) {
 
     const delta = 'deltaY' in event ? getDeltaXY(event) : getTouchXY(event);
     const sourceEvent = shouldPreventQueue.current.filter(
-      (e) => e.name === event.type && (e.target === event.target || event.target === e.shadowParent) && deltaCompare(e.delta, delta)
+      (e) =>
+        e.name === event.type &&
+        (e.target === event.target || event.target === e.shadowParent) &&
+        deltaCompare(e.delta, delta)
     )[0];
 
     // self event, and should be canceled
@@ -209,12 +214,15 @@ export function RemoveScrollSideCar(props: IRemoveScrollEffectProps) {
 
 function getOutermostShadowParent(node: Node | null): HTMLElement | null {
   let shadowParent: HTMLElement | null = null;
+
   while (node !== null) {
     if (node instanceof ShadowRoot) {
       shadowParent = node.host as HTMLElement;
       node = node.host;
     }
+
     node = node.parentNode;
   }
-  return shadowParent
+
+  return shadowParent;
 }

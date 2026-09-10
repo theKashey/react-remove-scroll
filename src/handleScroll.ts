@@ -82,6 +82,10 @@ export const handleScroll = (
   sourceDelta: number,
   noOverscroll: boolean
 ) => {
+  if (!(endTarget instanceof Element)) {
+    return true;
+  }
+
   const directionFactor = getDirectionFactor(axis, window.getComputedStyle(endTarget).direction);
   const delta = directionFactor * sourceDelta;
 

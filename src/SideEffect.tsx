@@ -7,8 +7,11 @@ import { nonPassive } from './aggresiveCapture';
 import { handleScroll, locationCouldBeScrolled } from './handleScroll';
 import { Axis, IRemoveScrollEffectProps } from './types';
 
-export const getTouchXY = (event: TouchEvent | WheelEvent) =>
-  'changedTouches' in event ? [event.changedTouches[0].clientX, event.changedTouches[0].clientY] : [0, 0];
+export const getTouchXY = (event: TouchEvent | WheelEvent) => {
+  const touch = 'changedTouches' in event ? event.changedTouches[0] : undefined;
+
+  return touch ? [touch.clientX, touch.clientY] : [0, 0];
+};
 
 export const getDeltaXY = (event: WheelEvent) => [event.deltaX, event.deltaY];
 

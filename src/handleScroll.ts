@@ -11,7 +11,7 @@ export const getComposedTarget = (event: any): HTMLElement => {
 };
 
 /**
- * Like `Node.contains`, but crosses shadow root boundaries.
+ * Like `Node.contains`, but follows the composed tree: into slots and out of shadow roots.
  */
 export const composedContains = (parent: Node, node: Node | null): boolean => {
   let current: Node | null = node;
@@ -21,7 +21,7 @@ export const composedContains = (parent: Node, node: Node | null): boolean => {
       return true;
     }
 
-    current = current.parentNode || (current as ShadowRoot).host || null;
+    current = (current as Element).assignedSlot || current.parentNode || (current as ShadowRoot).host || null;
   }
 
   return false;

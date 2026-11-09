@@ -24,14 +24,38 @@ const attachShadowScroller = (host: HTMLElement) => {
   return content;
 };
 
+const eventInit = { bubbles: true, composed: true, cancelable: true };
+
 const wheel = (target: Element) => {
-  const event = new WheelEvent('wheel', { deltaY: 50, bubbles: true, composed: true, cancelable: true });
+  const event = new WheelEvent('wheel', { ...eventInit, deltaY: 50 });
   target.dispatchEvent(event);
 
   return event.defaultPrevented;
 };
 
-describe('shadow DOM', () => {
+// jsdom has no Touch constructor, so touch lists are defined on plain events.
+const touchEvent = (type: string, clientY: number) => {
+  const event = new Event(type, eventInit);
+  const touches = [{ clientX: 0, clientY }];
+  Object.defineProperty(event, 'touches', { value: touches });
+  Object.defineProperty(event, 'changedTouches', { value: touches });
+
+  return event;
+};
+
+const touch = (target: Element) => {
+  target.dispatchEvent(touchEvent('touchstart', 100));
+
+  const event = touchEvent('touchmove', 50);
+  target.dispatchEvent(event);
+
+  return event.defaultPrevented;
+};
+
+describe.each([
+  ['wheel', wheel],
+  ['touch', touch],
+])('shadow DOM (%s)', (_name, scroll) => {
   let root: HTMLElement;
 
   beforeEach(() => {
@@ -44,7 +68,7 @@ describe('shadow DOM', () => {
     document.body.innerHTML = '';
   });
 
-  it('allows wheel scrolling inside a shard that lives in a shadow root', async () => {
+  it('allows scrolling inside a shard that lives in a shadow root', async () => {
     const shardHost = document.createElement('div');
     document.body.appendChild(shardHost);
 
@@ -57,10 +81,10 @@ describe('shadow DOM', () => {
     render(<RemoveScroll shards={[shard]}>lock</RemoveScroll>, root);
     await tick();
 
-    expect(wheel(content)).toBe(false);
+    expect(scroll(content)).toBe(false);
   });
 
-  it('still blocks wheel events on non-scrollable content inside a shard in a shadow root', async () => {
+  it('still blocks non-scrollable content inside a shard in a shadow root', async () => {
     const shardHost = document.createElement('div');
     document.body.appendChild(shardHost);
 
@@ -70,10 +94,10 @@ describe('shadow DOM', () => {
     render(<RemoveScroll shards={[shard]}>lock</RemoveScroll>, root);
     await tick();
 
-    expect(wheel(shard)).toBe(true);
+    expect(scroll(shard)).toBe(true);
   });
 
-  it('allows wheel scrolling in a shadow root nested inside a shard', async () => {
+  it('allows scrolling in a shadow root nested inside a shard', async () => {
     const shard = document.createElement('div');
     const host = document.createElement('div');
     shard.appendChild(host);
@@ -84,10 +108,27 @@ describe('shadow DOM', () => {
     render(<RemoveScroll shards={[shard]}>lock</RemoveScroll>, root);
     await tick();
 
-    expect(wheel(content)).toBe(false);
+    expect(scroll(content)).toBe(false);
   });
 
-  it('allows wheel scrolling in a shadow root nested inside the lock', async () => {
+  it('allows scrolling in a light DOM scroller slotted into a shard', async () => {
+    const shardHost = document.createElement('div');
+    document.body.appendChild(shardHost);
+
+    const shard = document.createElement('div');
+    shard.appendChild(document.createElement('slot'));
+    shardHost.attachShadow({ mode: 'open' }).appendChild(shard);
+
+    const { scroller, content } = makeScroller();
+    shardHost.appendChild(scroller);
+
+    render(<RemoveScroll shards={[shard]}>lock</RemoveScroll>, root);
+    await tick();
+
+    expect(scroll(content)).toBe(false);
+  });
+
+  it('allows scrolling in a shadow root nested inside the lock', async () => {
     const hostRef = React.createRef<HTMLDivElement>();
 
     render(
@@ -101,10 +142,10 @@ describe('shadow DOM', () => {
 
     const content = attachShadowScroller(hostRef.current!);
 
-    expect(wheel(content)).toBe(false);
+    expect(scroll(content)).toBe(false);
   });
 
-  it('still blocks wheel events on non-scrollable content inside a shadow root nested in the lock', async () => {
+  it('still blocks non-scrollable content inside a shadow root nested in the lock', async () => {
     const hostRef = React.createRef<HTMLDivElement>();
 
     render(
@@ -119,6 +160,6 @@ describe('shadow DOM', () => {
     const content = document.createElement('div');
     hostRef.current!.attachShadow({ mode: 'open' }).appendChild(content);
 
-    expect(wheel(content)).toBe(true);
+    expect(scroll(content)).toBe(true);
   });
 });

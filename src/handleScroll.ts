@@ -1,5 +1,32 @@
 import { Axis } from './types';
 
+/**
+ * The node the event was dispatched on, even when `event.target` has been retargeted to a shadow host.
+ * Accepts React synthetic events by reading their `nativeEvent`.
+ */
+export const getComposedTarget = (event: any): HTMLElement => {
+  const nativeEvent = event.nativeEvent || event;
+
+  return (nativeEvent.composedPath && nativeEvent.composedPath()[0]) || event.target;
+};
+
+/**
+ * Like `Node.contains`, but follows the composed tree: into slots and out of shadow roots.
+ */
+export const composedContains = (parent: Node, node: Node | null): boolean => {
+  let current: Node | null = node;
+
+  while (current) {
+    if (current === parent) {
+      return true;
+    }
+
+    current = (current as Element).assignedSlot || current.parentNode || (current as ShadowRoot).host || null;
+  }
+
+  return false;
+};
+
 const alwaysContainsScroll = (node: Element): boolean =>
   // textarea will always _contain_ scroll inside self. It only can be hidden
   node.tagName === 'TEXTAREA';
@@ -86,8 +113,8 @@ export const handleScroll = (
   const delta = directionFactor * sourceDelta;
 
   // find scrollable target
-  let target: HTMLElement | null = event.target as any;
-  const targetInLock = endTarget.contains(target);
+  let target: HTMLElement | null = getComposedTarget(event);
+  const targetInLock = composedContains(endTarget, target);
 
   let shouldCancelScroll = false;
   const isDeltaPositive = delta > 0;
@@ -122,7 +149,7 @@ export const handleScroll = (
     // portaled content
     (!targetInLock && target !== document.body) ||
     // self content
-    (targetInLock && (endTarget.contains(target) || endTarget === target))
+    (targetInLock && composedContains(endTarget, target))
   );
 
   // handle epsilon around 0 (non standard zoom levels)

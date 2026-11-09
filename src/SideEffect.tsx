@@ -4,7 +4,7 @@ import { RemoveScrollBar } from 'react-remove-scroll-bar';
 import { styleSingleton } from 'react-style-singleton';
 
 import { nonPassive } from './aggresiveCapture';
-import { handleScroll, locationCouldBeScrolled } from './handleScroll';
+import { composedContains, getComposedTarget, handleScroll, locationCouldBeScrolled } from './handleScroll';
 import { Axis, IRemoveScrollEffectProps } from './types';
 
 export const getTouchXY = (event: TouchEvent | WheelEvent) =>
@@ -26,7 +26,9 @@ let idCounter = 0;
 let lockStack: any[] = [];
 
 export function RemoveScrollSideCar(props: IRemoveScrollEffectProps) {
-  const shouldPreventQueue = React.useRef<Array<{ name: string; delta: number[]; target: any; should: boolean; shadowParent?: HTMLElement | null }>>([]);
+  const shouldPreventQueue = React.useRef<
+    Array<{ name: string; delta: number[]; target: any; should: boolean; shadowParent?: HTMLElement | null }>
+  >([]);
   const touchStartRef = React.useRef([0, 0]);
   const activeAxis = React.useRef<Axis | undefined>();
   const [id] = React.useState(idCounter++);
@@ -64,7 +66,7 @@ export function RemoveScrollSideCar(props: IRemoveScrollEffectProps) {
     const deltaY = 'deltaY' in event ? event.deltaY : touchStart[1] - touch[1];
 
     let currentAxis: Axis | undefined;
-    const target: HTMLElement = event.target as any;
+    const target = getComposedTarget(event);
 
     const moveDirection: Axis = Math.abs(deltaX) > Math.abs(deltaY) ? 'h' : 'v';
 
@@ -123,7 +125,10 @@ export function RemoveScrollSideCar(props: IRemoveScrollEffectProps) {
 
     const delta = 'deltaY' in event ? getDeltaXY(event) : getTouchXY(event);
     const sourceEvent = shouldPreventQueue.current.filter(
-      (e) => e.name === event.type && (e.target === event.target || event.target === e.shadowParent) && deltaCompare(e.delta, delta)
+      (e) =>
+        e.name === event.type &&
+        (e.target === event.target || event.target === e.shadowParent) &&
+        deltaCompare(e.delta, delta)
     )[0];
 
     // self event, and should be canceled
@@ -140,7 +145,7 @@ export function RemoveScrollSideCar(props: IRemoveScrollEffectProps) {
       const shardNodes = (lastProps.current.shards || [])
         .map(extractRef)
         .filter(Boolean)
-        .filter((node) => node.contains(event.target as any));
+        .filter((node) => composedContains(node, getComposedTarget(event)));
 
       const shouldStop =
         shardNodes.length > 0 ? shouldCancelEvent(event, shardNodes[0]) : !lastProps.current.noIsolation;
@@ -209,12 +214,15 @@ export function RemoveScrollSideCar(props: IRemoveScrollEffectProps) {
 
 function getOutermostShadowParent(node: Node | null): HTMLElement | null {
   let shadowParent: HTMLElement | null = null;
+
   while (node !== null) {
     if (node instanceof ShadowRoot) {
       shadowParent = node.host as HTMLElement;
       node = node.host;
     }
+
     node = node.parentNode;
   }
-  return shadowParent
+
+  return shadowParent;
 }
